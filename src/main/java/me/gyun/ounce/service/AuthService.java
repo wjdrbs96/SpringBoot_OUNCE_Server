@@ -3,6 +3,7 @@ package me.gyun.ounce.service;
 import me.gyun.ounce.dto.User;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
+import me.gyun.ounce.model.SignInModel;
 import me.gyun.ounce.model.SignUpModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
@@ -23,6 +24,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // 회원가입
     public DefaultRes<JwtService.TokenRes> signUp(final SignUpModel signUpModel) {
         final User user = userMapper.findById(signUpModel.getId());
 
@@ -31,12 +33,23 @@ public class AuthService {
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_USER);
         }
 
-
-        String salt = BCrypt.gensalt();
-        int userIdx = userMapper.save(signUpModel.getId(), BCrypt.hashpw(signUpModel.getPassword(), salt), salt, signUpModel.getEmail());
+        int userIdx = userMapper.save(signUpModel.getId(),passwordEncoder.encode(signUpModel.getPassword()), signUpModel.getEmail());
 
         final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(userIdx));
 
         return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
+    }
+
+    // 로그인
+    public DefaultRes<JwtService.TokenRes> signIn(final SignInModel signInModel) {
+        final User user = userMapper.findById(signInModel.getId());
+
+        if (passwordEncoder.matches(signInModel.getPassword(),user.getPassword()) && user != null) {
+            // 토큰 생성
+            final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(user.getUserIdx()));
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
+        }
+
+        return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.LOGIN_FAIL);
     }
 }

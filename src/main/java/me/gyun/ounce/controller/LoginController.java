@@ -2,6 +2,7 @@ package me.gyun.ounce.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.model.DefaultRes;
+import me.gyun.ounce.model.SignInModel;
 import me.gyun.ounce.model.SignUpModel;
 import me.gyun.ounce.service.AuthService;
 import me.gyun.ounce.utils.ResponseMessage;
@@ -29,6 +30,16 @@ public class LoginController {
     public ResponseEntity signUp(@RequestBody SignUpModel signUpModel) {
         try {
             return new ResponseEntity(authService.signUp(signUpModel), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/user/signIn")
+    public ResponseEntity signIn(@RequestBody SignInModel signInModel) {
+        try {
+            return new ResponseEntity(authService.signIn(signInModel), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
