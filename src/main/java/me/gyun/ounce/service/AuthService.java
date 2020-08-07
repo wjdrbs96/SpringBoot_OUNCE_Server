@@ -24,14 +24,13 @@ public class AuthService {
     }
 
     public DefaultRes<JwtService.TokenRes> signUp(final SignUpModel signUpModel) {
-        final User user = userMapper.findByIdAndPassword(signUpModel.getId(), signUpModel.getPassword());
+        final User user = userMapper.findById(signUpModel.getId());
 
         // 회원이 이미 존재할 때
         if (user != null) {
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_USER);
         }
 
-        System.out.println(passwordEncoder.encode(signUpModel.getPassword()));
 
         String salt = BCrypt.gensalt();
         int userIdx = userMapper.save(signUpModel.getId(), BCrypt.hashpw(signUpModel.getPassword(), salt), salt, signUpModel.getEmail());

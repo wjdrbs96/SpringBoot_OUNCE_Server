@@ -10,8 +10,8 @@ public interface UserMapper {
     @Options(useGeneratedKeys = true, keyColumn = "userIdx")
     int save(@Param("id") final String id, @Param("password") final String password, @Param("salt") final String salt, @Param("email") final String email);
 
-    @Select("SELECT * FROM user WHERE id = #{id} AND password = #{password}")
-    User findByIdAndPassword(@Param("id") final String id, @Param("password") final String password);
+    @Select("SELECT * FROM user WHERE id = #{id}")
+    User findById(@Param("id") final String id);
 
     @Select("SELECT * FROM user WHERE userIdx = #{userIdx}")
     User findByUserIdx(@Param("userIdx") int userIdx);
