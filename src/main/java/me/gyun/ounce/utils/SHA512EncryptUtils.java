@@ -6,7 +6,7 @@ public class SHA512EncryptUtils {
     /*
      * 단방향(일방향) 암호화 알고리즘
      * 평문 -> 암호문
-     * 암호분 -> 평문 불가능
+     * 암호문 -> 평문 불가능
      * @param planText
      * @return
      */

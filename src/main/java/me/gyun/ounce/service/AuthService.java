@@ -5,8 +5,9 @@ import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.SignUpModel;
 import me.gyun.ounce.utils.ResponseMessage;
-import me.gyun.ounce.utils.SHA512EncryptUtils;
 import me.gyun.ounce.utils.StatusCode;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,12 @@ public class AuthService {
 
     private final UserMapper userMapper;
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserMapper userMapper, JwtService jwtService) {
+    public AuthService(UserMapper userMapper, JwtService jwtService, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public DefaultRes<JwtService.TokenRes> signUp(final SignUpModel signUpModel) {
@@ -25,13 +28,15 @@ public class AuthService {
 
         // 회원이 이미 존재할 때
         if (user != null) {
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.ALREADY_USER);
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_USER);
         }
 
-        String salt = SHA512EncryptUtils.encrypt(signUpModel.getPassword());
-        userMapper.save(signUpModel.getId(), signUpModel.getPassword(), salt, signUpModel.getEmail());
+        System.out.println(passwordEncoder.encode(signUpModel.getPassword()));
 
-        final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(user.getUserIdx()));
+        String salt = BCrypt.gensalt();
+        int userIdx = userMapper.save(signUpModel.getId(), BCrypt.hashpw(signUpModel.getPassword(), salt), salt, signUpModel.getEmail());
+
+        final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(userIdx));
 
         return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
     }
