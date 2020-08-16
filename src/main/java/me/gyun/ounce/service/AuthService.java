@@ -35,6 +35,10 @@ public class AuthService {
         }
         String salt = saltService.genSalt();
 
+        // 비밀번호 암호화 방법1
+        System.out.println("Password Encode: " + passwordEncoder.encode(signUpModel.getPassword()));
+
+        // 비밀번호 암호화 방법2
         int userIdx = userMapper.save(signUpModel.getId(), saltService.encodePassword(salt, signUpModel.getPassword()),salt, signUpModel.getEmail());
 
         final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(userIdx));
@@ -45,13 +49,21 @@ public class AuthService {
     // 로그인
     public DefaultRes<JwtService.TokenRes> signIn(final SignInModel signInModel) {
         final User user = userMapper.findById(signInModel.getId());
+        System.out.println(user.getSalt());
 
-        if (passwordEncoder.matches(signInModel.getPassword(), user.getPassword()) && user != null) {
+        // 회원 정보가 존재하지 않거나, 아이디가 틀렸음
+        if (user == null) {
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.LOGIN_FAIL);
+        }
+
+        // 로그인 성공
+        if (passwordEncoder.matches(signInModel.getPassword(), user.getPassword())) {
             // 토큰 생성
             final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(user.getUserIdx()));
             return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
         }
 
+        // 비밀번호가 틀렸을 때
         return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.LOGIN_FAIL);
     }
 }
