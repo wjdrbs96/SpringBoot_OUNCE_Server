@@ -49,12 +49,20 @@ public class AuthService {
     // 로그인
     public DefaultRes<JwtService.TokenRes> signIn(final SignInModel signInModel) {
         final User user = userMapper.findById(signInModel.getId());
-        System.out.println(user.getSalt());
 
         // 회원 정보가 존재하지 않거나, 아이디가 틀렸음
         if (user == null) {
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.LOGIN_FAIL);
         }
+
+        // 다른 방법
+//        String salt = user.getSalt();
+//        String password = saltService.encodePassword(salt, signInModel.getPassword());
+//        if (password.equals(signInModel.getPassword())) {
+//            // 토큰 생성
+//            final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(user.getUserIdx()));
+//            return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
+//        }
 
         // 로그인 성공
         if (passwordEncoder.matches(signInModel.getPassword(), user.getPassword())) {
