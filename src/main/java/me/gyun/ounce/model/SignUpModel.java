@@ -6,5 +6,6 @@ import lombok.Data;
 public class SignUpModel {
     private String id;
     private String password;
+    private String salt;
     private String email;
 }

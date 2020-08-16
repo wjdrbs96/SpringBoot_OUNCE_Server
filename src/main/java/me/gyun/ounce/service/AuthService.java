@@ -16,11 +16,13 @@ public class AuthService {
     private final UserMapper userMapper;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+    private final SaltService saltService;
 
-    public AuthService(UserMapper userMapper, JwtService jwtService, PasswordEncoder passwordEncoder) {
+    public AuthService(UserMapper userMapper, JwtService jwtService, PasswordEncoder passwordEncoder, SaltService saltService) {
         this.userMapper = userMapper;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
+        this.saltService = saltService;
     }
 
     // 회원가입
@@ -31,8 +33,9 @@ public class AuthService {
         if (user != null) {
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_USER);
         }
+        String salt = saltService.genSalt();
 
-        int userIdx = userMapper.save(signUpModel.getId(),passwordEncoder.encode(signUpModel.getPassword()), signUpModel.getEmail());
+        int userIdx = userMapper.save(signUpModel.getId(), saltService.encodePassword(salt, signUpModel.getPassword()),salt, signUpModel.getEmail());
 
         final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(userIdx));
 
@@ -43,7 +46,7 @@ public class AuthService {
     public DefaultRes<JwtService.TokenRes> signIn(final SignInModel signInModel) {
         final User user = userMapper.findById(signInModel.getId());
 
-        if (passwordEncoder.matches(signInModel.getPassword(),user.getPassword()) && user != null) {
+        if (passwordEncoder.matches(signInModel.getPassword(), user.getPassword()) && user != null) {
             // 토큰 생성
             final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(user.getUserIdx()));
             return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
