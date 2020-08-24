@@ -39,11 +39,11 @@ public class AuthService {
         System.out.println("Password Encode: " + passwordEncoder.encode(signUpModel.getPassword()));
 
         // 비밀번호 암호화 방법2
-        int userIdx = userMapper.save(signUpModel.getId(), saltService.encodePassword(salt, signUpModel.getPassword()),salt, signUpModel.getEmail());
+        int userIdx = userMapper.save(signUpModel.getId(), saltService.encodePassword(salt, signUpModel.getPassword()), salt, signUpModel.getEmail());
 
         final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(userIdx));
 
-        return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
+        return DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_USER, tokenDto);
     }
 
     // 로그인
