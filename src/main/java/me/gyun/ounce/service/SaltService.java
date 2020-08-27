@@ -10,6 +10,7 @@ public class SaltService {
         return BCrypt.hashpw(password, salt);
     }
 
+    // 랜덤한 salt 값 생성
     public String genSalt() {
         return BCrypt.gensalt();
     }

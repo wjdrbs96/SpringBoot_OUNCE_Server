@@ -33,9 +33,11 @@ public class AuthService {
         if (user != null) {
             return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_USER);
         }
+
+        // salt Random 생성 (방법 2)
         String salt = saltService.genSalt();
 
-        // 비밀번호 암호화 방법1
+        // 비밀번호 암호화 방법1 ( passwordEncoder 를 구현하는 BCryptPasswordEncoder 클래스의 encode 메소드에서 salt를 제공 )
         System.out.println("Password Encode: " + passwordEncoder.encode(signUpModel.getPassword()));
 
         // 비밀번호 암호화 방법2
