@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Slf4j
 @Service
 public class JwtService {
@@ -29,13 +32,25 @@ public class JwtService {
     public String create(final int userIdx) {
         try {
             JWTCreator.Builder b = JWT.create();
+            // 토큰 발급자
             b.withIssuer(ISSUER);
+            // 토큰 payload 작성, key - value 형식, 객체도 가능
             b.withClaim("userIdx", userIdx);
+            // 토큰 만료날짜 지정
+            b.withExpiresAt(expiresAt());
             return b.sign(Algorithm.HMAC256(SECRET));
         } catch (JWTCreationException jwtCreationException) {
             log.info(jwtCreationException.getLocalizedMessage());
         }
         return null;
+    }
+
+    private Date expiresAt()  {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        // 한달 24 * 31
+        cal.add(Calendar.HOUR, 744);
+        return cal.getTime();
     }
 
     public static class TOKEN {
