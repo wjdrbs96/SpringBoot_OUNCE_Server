@@ -57,6 +57,7 @@ public class JwtService {
         cal.add(Calendar.HOUR, 744);
         return cal.getTime();
     }
+
     /**
      * 토큰 해독
      *

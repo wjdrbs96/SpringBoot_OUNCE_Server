@@ -1,5 +1,6 @@
 package me.gyun.ounce.service;
 
+import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.dto.User;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class AuthService {
 
     private final UserMapper userMapper;
@@ -66,6 +68,7 @@ public class AuthService {
 //            return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
 //        }
 
+
         // 로그인 성공
         if (passwordEncoder.matches(signInModel.getPassword(), user.getPassword())) {
             // 토큰 생성
@@ -76,4 +79,11 @@ public class AuthService {
         // 비밀번호가 틀렸을 때
         return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.LOGIN_FAIL);
     }
+
+    // 테스트
+    public void test(final String token) {
+        JwtService.TOKEN decode = jwtService.decode(token);
+    }
+
+
 }
