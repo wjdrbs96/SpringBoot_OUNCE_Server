@@ -14,7 +14,7 @@
 
 <br>
 
-:smiley_cat: <b>[API Specification](https://github.com/We-are-Ounce/OUNCE_Server/wiki)</b>
+:smiley_cat: <b>[API Specification](https://github.com/We-are-Ounce/OUNCE_Server/wiki)</b> - API 명세
 
 <br>
 
@@ -83,8 +83,11 @@
    <img src="https://user-images.githubusercontent.com/55732968/87797968-5fffe480-c886-11ea-96fc-e3191a74ec54.png" width="150"> <img src="https://user-images.githubusercontent.com/55732968/87797981-642c0200-c886-11ea-8bae-c0cc5629d8b5.png" width="150">  <img src="https://user-images.githubusercontent.com/55732968/87797983-64c49880-c886-11ea-8a95-03399b781741.png" width="150"> <img src="https://user-images.githubusercontent.com/55732968/87797985-65f5c580-c886-11ea-8135-ade7e056df19.png" width="150"> <img src="https://user-images.githubusercontent.com/55732968/87797990-668e5c00-c886-11ea-8552-fb0faffd86c8.png" width="150"> <img src="https://user-images.githubusercontent.com/55732968/87797992-6726f280-c886-11ea-9b47-ef51a0eac1d0.png" width="150">
 
    
+<br>
 
-
+## OUNCE의 다른 프로젝트
+* [ANDROID](https://github.com/We-are-Ounce/OUNCE_Android)
+* [IOS](https://github.com/We-are-Ounce/OUNCE_iOS)
 
 
 
