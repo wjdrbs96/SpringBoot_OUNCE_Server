@@ -2,8 +2,6 @@
 
 
 
-## <img src="resources/icon.png?raw=true" width="100">
-
 
 ### We are Ounce‼️
 
@@ -14,13 +12,15 @@
 >
 > 기록부터 선택까지, 온스가 함께합니다.
 
+<br>
 
 :smiley_cat: <b>[API Specification](https://github.com/We-are-Ounce/OUNCE_Server/wiki)</b>
 
+<br>
 
-<img src="resources/ounce_워크플로우.jpg?raw=true" width="500">
+### 워크플로우
 
-
+<img src="https://user-images.githubusercontent.com/45676906/92495614-18685a00-f232-11ea-86ee-bf0d8a46353b.jpg">
 
 
 ### 📍 Screenshots
