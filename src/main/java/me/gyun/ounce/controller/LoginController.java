@@ -20,10 +20,20 @@ public class LoginController {
 
     private final AuthService authService;
 
+    /**
+     * AuthService 생성자 의존성 주입
+     *
+     * @param AuthService
+     */
     public LoginController(AuthService authService) {
         this.authService = authService;
     }
 
+    /**
+     * 회원가입
+     *
+     * @return ResponseEntity
+     */
     @PostMapping("/user/signUp")
     public ResponseEntity signUp(@RequestBody SignUpModel signUpModel) {
         try {
@@ -34,6 +44,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * 로그인
+     *
+     * @return ResponseEntity
+     */
     @PostMapping("/user/signIn")
     public ResponseEntity signIn(@RequestBody SignInModel signInModel) {
         try {
@@ -44,8 +59,4 @@ public class LoginController {
         }
     }
 
-    @GetMapping("test")
-    public void Test(@RequestHeader String token) {
-        authService.test(token);
-    }
 }

@@ -6,16 +6,10 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface UserMapper {
 
-    @Insert("INSERT INTO user(id, password, salt, email) VALUES(#{id}, #{password}, #{salt}, #{email})")
-    @Options(useGeneratedKeys = true, keyColumn = "userIdx")
-    int save(@Param("id") final String id, @Param("password") final String password, @Param("salt") String salt, @Param("email") final String email);
-
-    @Select("SELECT * FROM user WHERE id = #{id} and #{password}")
-    User findByIdAndPassword(@Param("id") final String id, @Param("password") final String password);
-
-    @Select("SELECT * FROM user WHERE id = #{id}")
+    // 회원가입
+    int userInsert(User user);
+    // ID로 유저 찾기
     User findById(@Param("id") final String id);
-
-    @Select("SELECT * FROM user WHERE userIdx = #{userIdx}")
+    // userIdx로 유저 찾기
     User findByUserIdx(@Param("userIdx") int userIdx);
 }
