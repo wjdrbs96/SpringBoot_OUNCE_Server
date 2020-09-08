@@ -3,14 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="me.gyun.ounce.mapper.UserMapper">
+    <!-- ID로 유저 찾기 -->
     <select id="findById" resultType="User">
         SELECT * FROM user WHERE id = #{id}
     </select>
 
+    <!-- 회원가입  -->
     <insert id="userInsert" useGeneratedKeys="true" keyColumn="userIdx">
         INSERT INTO user (id, password, email) VALUES (#{id}, #{password}, #{email})
     </insert>
 
+    <!--  userIdx로 유저찾기   -->
     <select id="findByUserIdx" resultType="User">
         SELECT * FROM user WHERE userIdx = #{userIdx}
     </select>
