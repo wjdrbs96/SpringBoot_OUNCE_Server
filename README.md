@@ -12,9 +12,9 @@
 >
 > 기록부터 선택까지, 온스가 함께합니다.
 
-<br>
+<br> <br>
 
-:smiley_cat: <b>[API Specification](https://github.com/We-are-Ounce/OUNCE_Server/wiki)</b> - API 명세
+:smiley_cat: <b>[API Specification](https://github.com/We-are-Ounce/OUNCE_Server/wiki)</b> - API 명세서
 
 <br>
 
