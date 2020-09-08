@@ -63,7 +63,7 @@ public class ProfileController {
      * @param Token
      * @param ProfileIm
      */
-    @PostMapping("update/{profileIdx}")
+    @PutMapping("update/{profileIdx}")
     public ResponseEntity profileUpdate(@PathVariable int profileIdx,
                                         @RequestHeader("token") String token,
                                         ProfileModel profileModel,
