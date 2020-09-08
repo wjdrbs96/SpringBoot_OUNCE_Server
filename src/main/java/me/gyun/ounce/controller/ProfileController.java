@@ -9,10 +9,7 @@ import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -34,12 +31,12 @@ public class ProfileController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity profileRegister(ProfileModel profileModel, @RequestPart(value = "profile", required = false) final MultipartFile profile) {
+    public ResponseEntity profileRegister(ProfileModel profileModel, @RequestHeader("token") String token, @RequestPart(value = "profile", required = false) final MultipartFile profile) {
         try {
             if (profile != null) {
                 profileModel.setProfileImg(profile);
             }
-            return new ResponseEntity(profileService.register(profileModel), HttpStatus.OK);
+            return new ResponseEntity(profileService.register(profileModel, token), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);

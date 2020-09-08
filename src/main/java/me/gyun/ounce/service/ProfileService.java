@@ -17,6 +17,7 @@ public class ProfileService {
 
     private final S3FileUploadService s3FileUploadService;
     private final ProfileMapper profileMapper;
+    private final JwtService jwtService;
 
     /**
      * 생성자 의존성 주입
@@ -24,9 +25,10 @@ public class ProfileService {
      * @param S3FileUploadService
      * @Param ProfileMapper
      */
-    public ProfileService(S3FileUploadService s3FileUploadService, ProfileMapper profileMapper) {
+    public ProfileService(S3FileUploadService s3FileUploadService, ProfileMapper profileMapper, JwtService jwtService) {
         this.s3FileUploadService = s3FileUploadService;
         this.profileMapper = profileMapper;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -35,7 +37,7 @@ public class ProfileService {
      * @Param ProfileModel
      */
     @Transactional
-    public DefaultRes register(ProfileModel profileModel) {
+    public DefaultRes register(ProfileModel profileModel, String token) {
         try {
             if (profileModel != null) {
                 profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
@@ -44,8 +46,10 @@ public class ProfileService {
                                           profileModel.getProfileCatWeight(), profileModel.isProfileCatNeutral(),
                                           profileModel.getProfileCatAge(), profileModel.getProfileInfo());
 
-            profileMapper.profileRegister(profile);
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_REGISTER_SUCCESS, profileModel.getProfileIdx());
+            JwtService.TOKEN decode = jwtService.decode(token);
+            profileMapper.profileRegister(profile, decode.getUserIdx());
+            System.out.println(profile.getProfileIdx());
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_REGISTER_SUCCESS, profile.getProfileIdx());
         } catch (Exception e) {
             //Rollback
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
