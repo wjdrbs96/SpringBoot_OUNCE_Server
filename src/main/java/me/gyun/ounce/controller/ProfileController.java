@@ -39,7 +39,9 @@ public class ProfileController {
      * @param ProfileImg
      */
     @PostMapping("/register")
-    public ResponseEntity profileRegister(ProfileModel profileModel, @RequestHeader("token") String token, @RequestPart(value = "profile", required = false) final MultipartFile profile) {
+    public ResponseEntity profileRegister(ProfileModel profileModel,
+                                          @RequestHeader("token") String token,
+                                          @RequestPart(value = "profile", required = false) final MultipartFile profile) {
         try {
             if (profile != null) {
                 profileModel.setProfileImg(profile);
@@ -53,6 +55,33 @@ public class ProfileController {
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * 프로필 수정
+     *
+     * @param ProfileModel
+     * @param Token
+     * @param ProfileIm
+     */
+    @PostMapping("update/{profileIdx}")
+    public ResponseEntity profileUpdate(@PathVariable int profileIdx,
+                                        @RequestHeader("token") String token,
+                                        ProfileModel profileModel,
+                                        @RequestPart(value = "profile", required = false) final MultipartFile profile) {
+        try {
+            if (profile != null) {
+                profileModel.setProfileImg(profile);
+            }
+            if (token == null) {
+                return new ResponseEntity(DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NULL_VALUE), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity(profileService.update(profileModel, token, profileIdx), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     /**
      * 프로필 개수 제한 (3개)

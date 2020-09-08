@@ -11,4 +11,13 @@
     <select id="profileRegisterLimit" resultType="int">
         SELECT count(userIdx) FROM profile WHERE userIdx = #{userIdx}
     </select>
+
+    <update id="profileUpdate">
+        UPDATE profile SET profileName = #{profile.profileName}, profileURL = #{profile.profileURL}, profileCatWeight = #{profile.profileCatWeight}, profileCatNeutral = #{profile.profileCatNeutral}, profileCatAge = #{profile.profileCatAge}, profileInfo = #{profile.profileInfo}
+        WHERE userIdx = #{userIdx}
+    </update>
+
+    <select id="isMyProfile" resultType="int">
+        SELECT count(profileIdx) FROM profile WHERE profileIdx = #{profileIdx} and userIdx = #{userIdx}
+    </select>
 </mapper>

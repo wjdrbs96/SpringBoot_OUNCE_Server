@@ -60,6 +60,42 @@ public class ProfileService {
     }
 
     /**
+     * 고양이 프로필 수정
+     *
+     * @param ProfileModel
+     * @param token
+     */
+    @Transactional
+    public DefaultRes update(ProfileModel profileModel, String token, int profileIdx) {
+        try {
+            if (profileModel.getProfileImg() != null) {
+                profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
+            }
+            Profile profile = new Profile(profileModel.getProfileName(), profileModel.getProfileURL(),
+                    profileModel.getProfileCatWeight(), profileModel.isProfileCatNeutral(),
+                    profileModel.getProfileCatAge(), profileModel.getProfileInfo());
+
+            JwtService.TOKEN decode = jwtService.decode(token);
+
+            int check = profileMapper.isMyProfile(profileIdx, decode.getUserIdx());
+
+            // 프로필 수정 가능
+            if (check > 0) {
+                profileMapper.profileUpdate(profile, decode.getUserIdx());
+                return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_UPDATE_SUCCESS);
+            }
+
+            // 프로필 수정 불가능
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.PROFILE_NOT_AUTHORITY);
+        } catch (Exception e) {
+            //Rollback
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            log.error(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
+
+    /**
      * 고양이 프로필 등록 개수 제한
      *
      * @Param token
@@ -77,4 +113,5 @@ public class ProfileService {
             return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
         }
     }
+
 }
