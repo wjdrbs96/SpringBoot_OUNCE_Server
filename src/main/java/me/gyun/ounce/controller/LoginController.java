@@ -2,6 +2,7 @@ package me.gyun.ounce.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.model.DefaultRes;
+import me.gyun.ounce.model.LoginIdCheck;
 import me.gyun.ounce.model.SignInModel;
 import me.gyun.ounce.model.SignUpModel;
 import me.gyun.ounce.service.AuthService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@RequestMapping("user")
 public class LoginController {
 
     // 실패시 사용
@@ -34,7 +36,7 @@ public class LoginController {
      *
      * @return ResponseEntity
      */
-    @PostMapping("/user/signUp")
+    @PostMapping("/signUp")
     public ResponseEntity signUp(@RequestBody SignUpModel signUpModel) {
         try {
             return new ResponseEntity(authService.signUp(signUpModel), HttpStatus.OK);
@@ -49,13 +51,31 @@ public class LoginController {
      *
      * @return ResponseEntity
      */
-    @PostMapping("/user/signIn")
+    @PostMapping("/signIn")
     public ResponseEntity signIn(@RequestBody SignInModel signInModel) {
         try {
             return new ResponseEntity(authService.signIn(signInModel), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 아이디 중복체크
+     *
+     * @return ResponseEntity
+     */
+    @PostMapping("/checkId")
+    public ResponseEntity checkId(@RequestBody LoginIdCheck loginIdCheck) {
+        try {
+            if (loginIdCheck.getId() == null) {
+                return new ResponseEntity(DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NULL_VALUE), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity(authService.checkLoginId(loginIdCheck.getId()), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

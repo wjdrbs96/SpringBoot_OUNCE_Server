@@ -1,5 +1,6 @@
 package me.gyun.ounce.controller;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.ProfileModel;
@@ -30,13 +31,41 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    /**
+     * 프로필 등록
+     *
+     * @param ProfileModel
+     * @param Token
+     * @param ProfileImg
+     */
     @PostMapping("/register")
     public ResponseEntity profileRegister(ProfileModel profileModel, @RequestHeader("token") String token, @RequestPart(value = "profile", required = false) final MultipartFile profile) {
         try {
             if (profile != null) {
                 profileModel.setProfileImg(profile);
             }
+            if (token == null) {
+                return new ResponseEntity(DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NULL_VALUE), HttpStatus.BAD_REQUEST);
+            }
             return new ResponseEntity(profileService.register(profileModel, token), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 프로필 개수 제한 (3개)
+     *
+     * @param Token
+     */
+    @GetMapping("/addLimit")
+    public ResponseEntity profileAddLimit(@RequestHeader("token") String token) {
+        try {
+            if (token == null) {
+                return new ResponseEntity(DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NULL_VALUE), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity(profileService.profileRegisterLimit(token), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);

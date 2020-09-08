@@ -17,4 +17,8 @@
     <select id="findByUserIdx" resultType="User">
         SELECT * FROM user WHERE userIdx = #{userIdx}
     </select>
+
+    <select id="checkByLoginId" resultType="int">
+        SELECT count(userIdx) FROM user WHERE id = #{id};
+    </select>
 </mapper>

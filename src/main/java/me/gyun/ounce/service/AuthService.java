@@ -8,6 +8,7 @@ import me.gyun.ounce.model.SignInModel;
 import me.gyun.ounce.model.SignUpModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,4 +95,21 @@ public class AuthService {
         }
     }
 
+    /**
+     * 중복아이디 체크
+     *
+     * @return DefaultRes
+     */
+    public DefaultRes checkLoginId(String id) {
+        try {
+            int userCount = userMapper.checkByLoginId(id);
+            if (userCount == 0) {
+                return DefaultRes.res(StatusCode.OK, ResponseMessage.AVAILABLE_LOGINID, true);
+            }
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_USER, false);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
 }

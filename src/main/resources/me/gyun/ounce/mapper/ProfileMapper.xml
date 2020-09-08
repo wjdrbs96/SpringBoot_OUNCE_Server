@@ -7,4 +7,8 @@
         INSERT INTO profile (profileName, profileURL, profileCatWeight, profileCatNeutral, profileCatAge, profileInfo, userIdx)
         VALUES (#{profile.profileName}, #{profile.profileURL}, #{profile.profileCatWeight}, #{profile.profileCatNeutral}, #{profile.profileCatAge}, #{profile.profileInfo}, #{userIdx})
     </insert>
+
+    <select id="profileRegisterLimit" resultType="int">
+        SELECT count(userIdx) FROM profile WHERE userIdx = #{userIdx}
+    </select>
 </mapper>

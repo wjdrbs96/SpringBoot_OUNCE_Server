@@ -7,6 +7,7 @@ import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.ProfileModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -53,6 +54,25 @@ public class ProfileService {
         } catch (Exception e) {
             //Rollback
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            log.error(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
+
+    /**
+     * 고양이 프로필 등록 개수 제한
+     *
+     * @Param token
+     */
+    public DefaultRes profileRegisterLimit(final String token) {
+        try {
+            JwtService.TOKEN decode = jwtService.decode(token);
+            int profileCount = profileMapper.profileRegisterLimit(decode.getUserIdx());
+            if (profileCount <= 3) {
+                return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_REGISTER_POSSIBLE, true);
+            }
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.PROFILE_REGISTER_IMPOSSIBLE, false);
+        } catch (Exception e) {
             log.error(e.getMessage());
             return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
         }

@@ -12,4 +12,7 @@ public interface UserMapper {
     User findById(@Param("id") final String id);
     // userIdx로 유저 찾기
     User findByUserIdx(@Param("userIdx") int userIdx);
+
+    // 중복아이디 체크
+    int checkByLoginId(@Param("id") String id);
 }
