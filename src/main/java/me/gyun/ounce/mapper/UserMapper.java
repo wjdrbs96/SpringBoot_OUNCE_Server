@@ -16,5 +16,6 @@ public interface UserMapper {
     // 중복아이디 체크
     int checkByLoginId(@Param("id") String id);
     // 유저의 프로필 수
+    // return 타입이 객체 or List 라면 setter를 통해서 SQL을 객체에 맵핑하고 객체를 만들어야 하기 때문에 default Construct가 필요하지 않나 라는 생각
     ProfileCount userProfileCount(@Param("userIdx") int userIdx);
 }
