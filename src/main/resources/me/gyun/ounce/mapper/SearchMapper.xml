@@ -4,7 +4,7 @@
 
 <mapper namespace="me.gyun.ounce.mapper.SearchMapper">
     <select id="userSearch" resultType="UserProfile">
-        SELECT u.userIdx, u.id, p.profileIdx, p.profileURL, p.profileName, p.profileInfo
+        SELECT u.id, p.profileIdx, p.profileURL, p.profileName, p.profileInfo
         FROM user u JOIN profile p ON u.userIdx = p.userIdx
         WHERE u.id LIKE concat('%',#{id},'%')
     </select>

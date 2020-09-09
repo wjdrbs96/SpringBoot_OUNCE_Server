@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class UserProfile {
-    private int userIdx;
     private String id;
     private int profileIdx;
     private String profileURL;

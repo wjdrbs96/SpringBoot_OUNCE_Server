@@ -21,4 +21,8 @@
     <select id="checkByLoginId" resultType="int">
         SELECT count(userIdx) FROM user WHERE id = #{id};
     </select>
+
+    <select id="userProfileCount" resultType="ProfileCount">
+        SELECT profileIdx, count(profileIdx) as userProfileCount FROM profile WHERE userIdx = #{userIdx}
+    </select>
 </mapper>

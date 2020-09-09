@@ -1,6 +1,8 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
+import me.gyun.ounce.dto.LoginResult;
+import me.gyun.ounce.dto.ProfileCount;
 import me.gyun.ounce.dto.User;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
@@ -8,7 +10,6 @@ import me.gyun.ounce.model.SignInModel;
 import me.gyun.ounce.model.SignUpModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +72,7 @@ public class AuthService {
      *
      * @return DefaultRes
      */
-    public DefaultRes<JwtService.TokenRes> signIn(final SignInModel signInModel) {
+    public DefaultRes signIn(final SignInModel signInModel) {
         try {
             final User user = userMapper.findById(signInModel.getId());
 
@@ -82,9 +83,12 @@ public class AuthService {
 
             // 로그인 성공
             if (passwordEncoder.matches(signInModel.getPassword(), user.getPassword())) {
+                ProfileCount profileCount = userMapper.userProfileCount(user.getUserIdx());
+
                 // 토큰 생성
                 final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(user.getUserIdx()));
-                return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
+                LoginResult loginResult = new LoginResult(tokenDto.getToken(), profileCount);
+                return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, loginResult);
             }
 
             // 비밀번호가 틀렸을 때
