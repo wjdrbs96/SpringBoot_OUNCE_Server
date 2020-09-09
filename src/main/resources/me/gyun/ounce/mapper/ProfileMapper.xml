@@ -20,4 +20,8 @@
     <select id="isMyProfile" resultType="int">
         SELECT count(profileIdx) FROM profile WHERE profileIdx = #{profileIdx} and userIdx = #{userIdx}
     </select>
+
+    <select id="profileConversion" resultType="ProfileConversion">
+        SELECT profileIdx, profileURL, profileName, profileInfo FROM profile WHERE userIdx = #{userIdx} AND profileIdx != #{profileIdx}
+    </select>
 </mapper>

@@ -1,8 +1,10 @@
 package me.gyun.ounce.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Profile {
     private int profileIdx;
     private String profileName;

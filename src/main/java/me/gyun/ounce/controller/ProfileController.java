@@ -61,7 +61,8 @@ public class ProfileController {
      *
      * @param ProfileModel
      * @param Token
-     * @param ProfileIm
+     * @param ProfileImg
+     * @param profileIdx
      */
     @PutMapping("update/{profileIdx}")
     public ResponseEntity profileUpdate(@PathVariable int profileIdx,
@@ -95,6 +96,22 @@ public class ProfileController {
                 return new ResponseEntity(DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NULL_VALUE), HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity(profileService.profileRegisterLimit(token), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 프로필 전환
+     *
+     * @param Token
+     * @param profileIdx
+     */
+    @GetMapping("/conversion/{profileIdx}")
+    public ResponseEntity profileConversion(@RequestHeader("token") String token, @PathVariable int profileIdx) {
+        try {
+            return new ResponseEntity(profileService.conversion(profileIdx, token), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,8 +1,11 @@
 package me.gyun.ounce.mapper;
 
 import me.gyun.ounce.dto.Profile;
+import me.gyun.ounce.dto.ProfileConversion;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface ProfileMapper {
@@ -18,4 +21,7 @@ public interface ProfileMapper {
 
     // 프로필 수정권한 체크
     int isMyProfile(@Param("profileIdx") int profileIdx, @Param("userIdx") int userIdx);
+
+    // 나의 프로필 계정 전환
+    List<ProfileConversion> profileConversion(@Param("profileIdx") int profileIdx, @Param("userIdx") int userIdx);
 }

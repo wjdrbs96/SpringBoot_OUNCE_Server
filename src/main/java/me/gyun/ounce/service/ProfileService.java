@@ -4,13 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.dto.Profile;
 import me.gyun.ounce.mapper.ProfileMapper;
 import me.gyun.ounce.model.DefaultRes;
+import me.gyun.ounce.dto.ProfileConversion;
 import me.gyun.ounce.model.ProfileModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -24,7 +26,7 @@ public class ProfileService {
      * 생성자 의존성 주입
      *
      * @param S3FileUploadService
-     * @Param ProfileMapper
+     * @param ProfileMapper
      */
     public ProfileService(S3FileUploadService s3FileUploadService, ProfileMapper profileMapper, JwtService jwtService) {
         this.s3FileUploadService = s3FileUploadService;
@@ -35,7 +37,7 @@ public class ProfileService {
     /**
      * 고양이 프로필 등록
      *
-     * @Param ProfileModel
+     * @param ProfileModel
      */
     @Transactional
     public DefaultRes register(ProfileModel profileModel, String token) {
@@ -98,7 +100,7 @@ public class ProfileService {
     /**
      * 고양이 프로필 등록 개수 제한
      *
-     * @Param token
+     * @param token
      */
     public DefaultRes profileRegisterLimit(final String token) {
         try {
@@ -114,4 +116,20 @@ public class ProfileService {
         }
     }
 
+    /**
+     * 나의 프로필 전환
+     *
+     * @oaram token
+     * @param profileIdx
+     */
+    public DefaultRes conversion(int profileIdx, String token) {
+        try {
+            JwtService.TOKEN decode = jwtService.decode(token);
+            List<ProfileConversion> profileList = profileMapper.profileConversion(profileIdx, decode.getUserIdx());
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_CONVERSION_SUCCESS, profileList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
 }

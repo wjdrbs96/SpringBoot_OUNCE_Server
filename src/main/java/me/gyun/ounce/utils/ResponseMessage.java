@@ -23,4 +23,8 @@ public class ResponseMessage {
     public static final String PROFILE_REGISTER_IMPOSSIBLE = "프로필 등록 불가능합니다";
     public static final String PROFILE_UPDATE_SUCCESS = "프로필 수정 성공입니다";
     public static final String PROFILE_NOT_AUTHORITY = "프로필 수정 권한이 없습니다";
+    public static final String PROFILE_CONVERSION_SUCCESS = "프로필 전환 성공입니다";
+
+    // 메인화면
+    public static final String PROFILE_MAIN_SUCCESS = "메인 프로필 조회 성공입니다";
 }
