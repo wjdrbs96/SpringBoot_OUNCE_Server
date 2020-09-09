@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 public interface UserMapper {
 
     // 회원가입
-    int userInsert(User user);
+    int userInsert(@Param("user") User user);
     // ID로 유저 찾기
     User findById(@Param("id") final String id);
     // userIdx로 유저 찾기

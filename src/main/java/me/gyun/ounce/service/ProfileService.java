@@ -2,12 +2,14 @@ package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.dto.Profile;
+import me.gyun.ounce.dto.ProfileRegister;
 import me.gyun.ounce.mapper.ProfileMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.dto.ProfileConversion;
 import me.gyun.ounce.model.ProfileModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
+import me.gyun.ounce.vo.ProfileIdx;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -50,9 +52,10 @@ public class ProfileService {
                                           profileModel.getProfileCatAge(), profileModel.getProfileInfo());
 
             JwtService.TOKEN decode = jwtService.decode(token);
-            profileMapper.profileRegister(profile, decode.getUserIdx());
-            System.out.println(profile.getProfileIdx());
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_REGISTER_SUCCESS, profile.getProfileIdx());
+            ProfileRegister profileRegister = new ProfileRegister(profile, decode.getUserIdx());
+            profileMapper.profileRegister(profileRegister);
+            ProfileIdx profileIdx = new ProfileIdx(profileRegister.getProfile().getProfileIdx());
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_REGISTER_SUCCESS, profileIdx);
         } catch (Exception e) {
             //Rollback
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

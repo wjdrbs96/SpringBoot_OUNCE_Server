@@ -27,4 +27,8 @@ public class ResponseMessage {
 
     // 메인화면
     public static final String PROFILE_MAIN_SUCCESS = "메인 프로필 조회 성공입니다";
+
+    // 검색
+    public static final String SUCCESS_SEARCH_USER = "유저검색 성공입니다";
+    public static final String NO_SEARCH_RESULT = "검색결과가 존재하지 않습니다";
 }

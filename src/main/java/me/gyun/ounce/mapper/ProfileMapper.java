@@ -2,6 +2,7 @@ package me.gyun.ounce.mapper;
 
 import me.gyun.ounce.dto.Profile;
 import me.gyun.ounce.dto.ProfileConversion;
+import me.gyun.ounce.dto.ProfileRegister;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public interface ProfileMapper {
 
     // 프로필 등록
-    int profileRegister(@Param("profile") Profile profile, @Param("userIdx") int userIdx);
+    int profileRegister(@Param("profileRegister") ProfileRegister profileRegister);
 
     // 프로필 개수 제한
     int profileRegisterLimit(@Param("userIdx") int userIdx);
