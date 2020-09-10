@@ -31,4 +31,8 @@ public class ResponseMessage {
     // 검색
     public static final String SUCCESS_SEARCH_USER = "유저검색 성공입니다";
     public static final String NO_SEARCH_RESULT = "검색결과가 존재하지 않습니다";
+
+    // 리뷰
+    public static final String FOOD_REVIEW_RESULT = "캣푸드 리뷰전체 조회 성공입니다";
+    public static final String REVIEW_REGISTER_SUCCESS = "리뷰작성 성공입니다";
 }
