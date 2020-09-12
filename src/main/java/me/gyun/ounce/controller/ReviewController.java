@@ -55,4 +55,20 @@ public class ReviewController {
         }
     }
 
+    /**
+     * 리뷰 삭제
+     * @param token
+     * @param reviewIdx
+     */
+    @DeleteMapping("review/delete/{reviewIdx}/{profileIdx}")
+    public ResponseEntity reviewDelete(@PathVariable int reviewIdx, @PathVariable int profileIdx, @RequestHeader("token") String token) {
+        try {
+            reviewService.deleteReview(reviewIdx, profileIdx, token);
+            return new ResponseEntity(reviewService.deleteReview(reviewIdx, profileIdx, token), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

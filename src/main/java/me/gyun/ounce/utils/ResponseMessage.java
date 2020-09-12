@@ -35,4 +35,6 @@ public class ResponseMessage {
     // 리뷰
     public static final String FOOD_REVIEW_RESULT = "캣푸드 리뷰전체 조회 성공입니다";
     public static final String REVIEW_REGISTER_SUCCESS = "리뷰작성 성공입니다";
+    public static final String REVIEW_NOT_DELETE = "리뷰 삭제권한이 없습니다";
+    public static final String REVIEW_SUCCESS_DELETE = "리뷰를 삭제하였습니다";
 }

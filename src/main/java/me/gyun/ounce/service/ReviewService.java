@@ -69,4 +69,36 @@ public class ReviewService {
         }
 
     }
+
+    /**
+     * 캣 푸드 리뷰 삭제
+     *
+     * @param profileIdx
+     * @param reviewIdx
+     * @param token
+     */
+    @Transactional
+    public DefaultRes deleteReview(int reviewIdx, int profileIdx, String token) {
+        try {
+            JwtService.TOKEN decode = jwtService.decode(token);
+            int[] profileIdxList = reviewMapper.findProfileIdx(decode.getUserIdx());
+
+            // 유저당 최대 프로필 3개 가질 수 있음
+            for (int idx : profileIdxList) {
+                if (profileIdx == idx) {
+                    // 삭제 가능
+                    reviewMapper.deleteReview(reviewIdx);
+                    return DefaultRes.res(StatusCode.OK, ResponseMessage.REVIEW_SUCCESS_DELETE);
+                }
+            }
+            // 삭제 권한이 없음
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.REVIEW_NOT_DELETE);
+
+        } catch (Exception e) {
+            //Rollback
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            log.error(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
 }

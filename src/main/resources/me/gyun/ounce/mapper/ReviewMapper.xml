@@ -17,4 +17,13 @@
         INSERT INTO review (reviewRating, reviewPrefer, foodEvaluation, stoolState, stoolSmell, trouble, reviewMemo, createdAt, foodIdx, profileIdx, userIdx)
         VALUES (#{reviewRating}, #{reviewPrefer}, #{foodEvaluation}, #{stoolState}, #{stoolSmell}, #{trouble}, #{reviewMemo}, #{createdAt}, #{foodIdx}, #{profileIdx}, #{userIdx})
     </insert>
+
+    <select id="findProfileIdx" resultType="int">
+        SELECT profileIdx FROM profile WHERE userIdx = #{userIdx}
+    </select>
+
+    <delete id="deleteReview">
+        DELETE FROM review WHERE reviewIdx = #{reviewIdx}
+    </delete>
+
 </mapper>

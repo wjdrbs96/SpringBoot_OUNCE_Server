@@ -18,4 +18,11 @@ public interface ReviewMapper {
 
     // 리뷰 작성
     int foodReviewAdd(FoodReviewAdd foodReviewAdd);
+
+    // 유저가 가지고 있는 프로필 조회
+    int[] findProfileIdx(int userIdx);
+
+    // 리뷰 삭제
+    void deleteReview(int reviewIdx);
+
 }
