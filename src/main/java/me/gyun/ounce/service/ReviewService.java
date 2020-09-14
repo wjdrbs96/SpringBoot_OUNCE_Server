@@ -8,7 +8,7 @@ import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.ReviewAdd;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
-import me.gyun.ounce.vo.ReviewAddIdx;
+import me.gyun.ounce.dto.ReviewAddIdx;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -101,4 +101,5 @@ public class ReviewService {
             return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
         }
     }
+
 }

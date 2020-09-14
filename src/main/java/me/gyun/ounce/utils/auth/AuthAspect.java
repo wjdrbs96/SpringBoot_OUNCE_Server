@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 @Aspect
 // 항상 @annotation 패키지 이름을 실제 사용한 annotation 경로로 맞춰야함
-public class AuthAspect {
+public class  AuthAspect {
 
     private final static String AUTHORIZATION = "Authorization";
     /**

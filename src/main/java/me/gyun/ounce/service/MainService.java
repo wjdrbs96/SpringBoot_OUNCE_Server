@@ -1,7 +1,7 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.vo.MainHomeUp;
+import me.gyun.ounce.dto.MainHomeUp;
 import me.gyun.ounce.dto.MainProfile;
 import me.gyun.ounce.mapper.MainMapper;
 import me.gyun.ounce.mapper.ReviewMapper;

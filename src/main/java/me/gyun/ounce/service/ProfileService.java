@@ -9,7 +9,7 @@ import me.gyun.ounce.dto.ProfileConversion;
 import me.gyun.ounce.model.ProfileModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
-import me.gyun.ounce.vo.ProfileIdx;
+import me.gyun.ounce.dto.ProfileIdx;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;

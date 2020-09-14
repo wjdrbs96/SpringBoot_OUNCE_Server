@@ -59,6 +59,7 @@ public class ReviewController {
      * 리뷰 삭제
      * @param token
      * @param reviewIdx
+     * @param profileIdx
      */
     @DeleteMapping("review/delete/{reviewIdx}/{profileIdx}")
     public ResponseEntity reviewDelete(@PathVariable int reviewIdx, @PathVariable int profileIdx, @RequestHeader("token") String token) {
@@ -70,5 +71,4 @@ public class ReviewController {
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

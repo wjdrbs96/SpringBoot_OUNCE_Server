@@ -1,4 +1,4 @@
-package me.gyun.ounce.vo;
+package me.gyun.ounce.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
