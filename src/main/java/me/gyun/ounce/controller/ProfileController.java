@@ -68,16 +68,21 @@ public class ProfileController {
      * @param profileIdx
      */
     @Auth
-    @PutMapping("update/{profileIdx}")
+    @PutMapping("update/{profileIdx}/{userIdx}")
     public ResponseEntity profileUpdate(@PathVariable int profileIdx,
+                                        @PathVariable int userIdx,
                                         @RequestHeader("token") String token,
                                         ProfileModel profileModel,
-                                        @RequestPart(value = "profile", required = false) final MultipartFile profile) {
+                                        @RequestPart(value = "profile", required = false) final MultipartFile profileImg) {
         try {
-            if (profile != null) {
-                profileModel.setProfileImg(profile);
+            if (jwtService.checkAuth(token, userIdx)) {
+                if (profileImg != null) {
+                    profileModel.setProfileImg(profileImg);
+                }
+                return new ResponseEntity(profileService.update(profileModel, userIdx, profileIdx), HttpStatus.OK);
             }
-            return new ResponseEntity(profileService.update(profileModel, token, profileIdx), HttpStatus.OK);
+            // 수정 권한 없음
+            return new ResponseEntity(UNAUTHORIZED_RES, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -91,7 +96,7 @@ public class ProfileController {
      * @param Token
      */
     @Auth
-    @GetMapping("/add-limit")
+    @GetMapping("/limit")
     public ResponseEntity profileAddLimit(@RequestHeader("token") String token) {
         try {
             return new ResponseEntity(profileService.profileRegisterLimit(token), HttpStatus.OK);
@@ -107,6 +112,7 @@ public class ProfileController {
      * @param Token
      * @param profileIdx
      */
+    @Auth
     @GetMapping("/conversion/{profileIdx}")
     public ResponseEntity profileConversion(@RequestHeader("token") String token, @PathVariable int profileIdx) {
         try {

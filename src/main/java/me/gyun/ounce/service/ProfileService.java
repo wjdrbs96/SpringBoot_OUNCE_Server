@@ -71,7 +71,7 @@ public class ProfileService {
      * @param token
      */
     @Transactional
-    public DefaultRes update(ProfileModel profileModel, String token, int profileIdx) {
+    public DefaultRes update(ProfileModel profileModel, int userIdx, int profileIdx) {
         try {
             if (profileModel.getProfileImg() != null) {
                 profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
@@ -80,18 +80,11 @@ public class ProfileService {
                     profileModel.getProfileCatWeight(), profileModel.isProfileCatNeutral(),
                     profileModel.getProfileCatAge(), profileModel.getProfileInfo());
 
-            JwtService.TOKEN decode = jwtService.decode(token);
-
-            int check = profileMapper.isMyProfile(profileIdx, decode.getUserIdx());
-
-            // 프로필 수정 가능
-            if (check > 0) {
-                profileMapper.profileUpdate(profile, decode.getUserIdx());
+            if (profileMapper.isMyProfile(profileIdx, userIdx) > 0) {
+                profileMapper.profileUpdate(profile, profileIdx);
                 return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_UPDATE_SUCCESS);
             }
-
-            // 프로필 수정 불가능
-            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.PROFILE_NOT_AUTHORITY);
+            return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.WRONG_VALUE);
         } catch (Exception e) {
             //Rollback
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

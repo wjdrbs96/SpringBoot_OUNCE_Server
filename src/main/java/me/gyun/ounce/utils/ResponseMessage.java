@@ -6,6 +6,7 @@ public class ResponseMessage {
     public static final String DB_ERROR = "데이터베이스 에러";
     public static final String NULL_VALUE = "필요한 값이 없습니다";
     public static final String UNAUTHORIZED = "권한이 없습니다";
+    public static final String WRONG_VALUE = "올바르지 않은 값입니다";
 
     // 유저
     public static final String LOGIN_SUCCESS = "로그인 성공";
