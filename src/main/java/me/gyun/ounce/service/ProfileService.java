@@ -42,7 +42,7 @@ public class ProfileService {
      * @param ProfileModel
      */
     @Transactional
-    public DefaultRes register(ProfileModel profileModel, String token) {
+    public DefaultRes register(ProfileModel profileModel, int userIdx) {
         try {
             if (profileModel != null) {
                 profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
@@ -51,8 +51,7 @@ public class ProfileService {
                                           profileModel.getProfileCatWeight(), profileModel.isProfileCatNeutral(),
                                           profileModel.getProfileCatAge(), profileModel.getProfileInfo());
 
-            JwtService.TOKEN decode = jwtService.decode(token);
-            ProfileRegister profileRegister = new ProfileRegister(profile, decode.getUserIdx());
+            ProfileRegister profileRegister = new ProfileRegister(profile, userIdx);
             profileMapper.profileRegister(profileRegister);
             ProfileIdx profileIdx = new ProfileIdx(profileRegister.getProfile().getProfileIdx());
             return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_REGISTER_SUCCESS, profileIdx);

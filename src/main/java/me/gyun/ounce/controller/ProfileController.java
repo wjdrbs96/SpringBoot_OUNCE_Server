@@ -44,15 +44,19 @@ public class ProfileController {
      * @param ProfileImg
      */
     @Auth
-    @PostMapping("/register")
+    @PostMapping("/register/:userIdx")
     public ResponseEntity profileRegister(@Valid ProfileModel profileModel,
                                           @RequestHeader("token") String token,
-                                          @RequestPart(value = "profile", required = false) final MultipartFile profileImg) {
+                                          @RequestPart(value = "profile", required = false) final MultipartFile profileImg,
+                                          @PathVariable int userIdx) {
         try {
-            if (profileImg != null) {
-                profileModel.setProfileImg(profileImg);
+            if (jwtService.checkAuth(token, userIdx)) {
+                if (profileImg != null) {
+                    profileModel.setProfileImg(profileImg);
+                }
+                return new ResponseEntity(profileService.register(profileModel, userIdx), HttpStatus.OK);
             }
-            return new ResponseEntity(profileService.register(profileModel, token), HttpStatus.OK);
+            return new ResponseEntity(UNAUTHORIZED_RES, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
