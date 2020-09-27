@@ -2,14 +2,14 @@ package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.dto.profiledto.Profile;
+import me.gyun.ounce.dto.profiledto.ProfileConversion;
+import me.gyun.ounce.dto.profiledto.ProfileIdx;
 import me.gyun.ounce.dto.profiledto.ProfileRegister;
 import me.gyun.ounce.mapper.ProfileMapper;
 import me.gyun.ounce.model.DefaultRes;
-import me.gyun.ounce.dto.profiledto.ProfileConversion;
 import me.gyun.ounce.model.ProfileModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
-import me.gyun.ounce.dto.profiledto.ProfileIdx;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -47,9 +47,14 @@ public class ProfileService {
             if (profileModel != null) {
                 profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
             }
-            Profile profile = new Profile(profileModel.getProfileName(), profileModel.getProfileURL(),
-                                          profileModel.getProfileCatWeight(), profileModel.isProfileCatNeutral(),
-                                          profileModel.getProfileCatAge(), profileModel.getProfileInfo());
+            Profile profile = Profile.builder()
+                    .profileName(profileModel.getProfileName())
+                    .profileURL(profileModel.getProfileURL())
+                    .profileCatWeight(profileModel.getProfileCatWeight())
+                    .profileCatNeutral(profileModel.isProfileCatNeutral())
+                    .profileCatAge(profileModel.getProfileCatAge())
+                    .profileInfo(profileModel.getProfileInfo())
+                    .build();
 
             ProfileRegister profileRegister = new ProfileRegister(profile, userIdx);
             profileMapper.profileRegister(profileRegister);
@@ -75,9 +80,14 @@ public class ProfileService {
             if (profileModel.getProfileImg() != null) {
                 profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
             }
-            Profile profile = new Profile(profileModel.getProfileName(), profileModel.getProfileURL(),
-                    profileModel.getProfileCatWeight(), profileModel.isProfileCatNeutral(),
-                    profileModel.getProfileCatAge(), profileModel.getProfileInfo());
+            Profile profile = Profile.builder()
+                    .profileName(profileModel.getProfileName())
+                    .profileURL(profileModel.getProfileURL())
+                    .profileCatWeight(profileModel.getProfileCatWeight())
+                    .profileCatNeutral(profileModel.isProfileCatNeutral())
+                    .profileCatAge(profileModel.getProfileCatAge())
+                    .profileInfo(profileModel.getProfileInfo())
+                    .build();
 
             if (profileMapper.isMyProfile(profileIdx, userIdx) > 0) {
                 profileMapper.profileUpdate(profile, profileIdx);

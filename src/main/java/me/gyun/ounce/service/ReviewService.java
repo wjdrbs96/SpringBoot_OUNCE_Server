@@ -20,16 +20,14 @@ import java.util.List;
 public class ReviewService {
 
     private final ReviewMapper reviewMapper;
-    private final JwtService jwtService;
 
     /**
      * 생성자 의존성 주입
      *
      * @param ReviewMapper
      */
-    public ReviewService(ReviewMapper reviewMapper, JwtService jwtService) {
+    public ReviewService(ReviewMapper reviewMapper) {
         this.reviewMapper = reviewMapper;
-        this.jwtService = jwtService;
     }
 
     /**
@@ -53,10 +51,21 @@ public class ReviewService {
      * @param foodIdx
      */
     @Transactional
-    public DefaultRes reviewRegister(ReviewModel reviewAdd, String token) {
+    public DefaultRes reviewRegister(ReviewModel reviewAdd, int userIdx) {
         try {
-            JwtService.TOKEN decode = jwtService.decode(token);
-            FoodReviewAdd foodReviewAdd = new FoodReviewAdd(reviewAdd.getReviewRating(), reviewAdd.getReviewPrefer(), reviewAdd.getFoodEvaluation(), reviewAdd.getStoolState(), reviewAdd.getStoolSmell(), reviewAdd.getTrouble(), reviewAdd.getReviewMemo(), reviewAdd.getCreatedAt(), reviewAdd.getFoodIdx(), reviewAdd.getProfileIdx(), decode.getUserIdx());
+            FoodReviewAdd foodReviewAdd = FoodReviewAdd.builder()
+                    .reviewRating(reviewAdd.getReviewRating())
+                    .reviewPrefer(reviewAdd.getReviewPrefer())
+                    .foodEvaluation(reviewAdd.getFoodEvaluation())
+                    .stoolState(reviewAdd.getStoolState())
+                    .stoolSmell(reviewAdd.getStoolSmell())
+                    .trouble(reviewAdd.getTrouble())
+                    .reviewMemo(reviewAdd.getReviewMemo())
+                    .createdAt(reviewAdd.getCreatedAt())
+                    .foodIdx(reviewAdd.getFoodIdx())
+                    .profileIdx(reviewAdd.getProfileIdx())
+                    .userIdx(userIdx)
+                    .build();
 
             reviewMapper.foodReviewAdd(foodReviewAdd);
             ReviewAddIdx reviewAddIdx = new ReviewAddIdx(foodReviewAdd.getReviewIdx());

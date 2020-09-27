@@ -1,8 +1,10 @@
 package me.gyun.ounce.dto.fooddto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class FoodReviewAdd {
     private int reviewIdx;
     private int reviewRating;

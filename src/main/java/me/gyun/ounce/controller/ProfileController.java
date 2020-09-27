@@ -44,7 +44,7 @@ public class ProfileController {
      * @param ProfileImg
      */
     @Auth
-    @PostMapping("/register/:userIdx")
+    @PostMapping("/register/{userIdx}")
     public ResponseEntity profileRegister(@Valid ProfileModel profileModel,
                                           @RequestHeader("token") String token,
                                           @RequestPart(value = "profile", required = false) final MultipartFile profileImg,

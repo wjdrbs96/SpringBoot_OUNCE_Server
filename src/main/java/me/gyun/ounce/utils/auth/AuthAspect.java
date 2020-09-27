@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 /**
  * 토큰 유효성 검사
  *
@@ -52,6 +53,7 @@ public class  AuthAspect {
     @Around("@annotation(me.gyun.ounce.utils.auth.Auth)")
     public Object around(final ProceedingJoinPoint pjp) throws Throwable {
         final String jwt = httpServletRequest.getHeader(AUTHORIZATION);
+        // Object attribute = httpServletRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
         // 토큰 존재 여부 확인
         if (jwt == null) {
@@ -73,6 +75,5 @@ public class  AuthAspect {
             return pjp.proceed(pjp.getArgs());
         }
     }
-
 }
 

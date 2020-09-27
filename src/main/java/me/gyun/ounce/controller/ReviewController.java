@@ -55,7 +55,7 @@ public class ReviewController {
     public ResponseEntity reviewAdd(@RequestHeader("token") String token, @RequestBody ReviewModel reviewAdd, @PathVariable int userIdx) {
         try {
             if (jwtService.checkAuth(token, userIdx)) {
-                return new ResponseEntity(reviewService.reviewRegister(reviewAdd, token), HttpStatus.OK);
+                return new ResponseEntity(reviewService.reviewRegister(reviewAdd, userIdx), HttpStatus.OK);
             }
             return new ResponseEntity(UNAUTHORIZED_RES, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {

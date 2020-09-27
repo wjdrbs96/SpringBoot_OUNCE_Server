@@ -1,10 +1,9 @@
 package me.gyun.ounce.dto.profiledto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@NoArgsConstructor
+@Builder
 public class Profile {
     private int profileIdx;
     private String profileName;
@@ -13,13 +12,4 @@ public class Profile {
     private boolean profileCatNeutral;
     private int profileCatAge;
     private String profileInfo;
-
-    public Profile(String profileName, String profileURL, double profileCatWeight, boolean profileCatNeutral, int profileCatAge, String profileInfo) {
-        this.profileName = profileName;
-        this.profileURL = profileURL;
-        this.profileCatWeight = profileCatWeight;
-        this.profileCatNeutral = profileCatNeutral;
-        this.profileCatAge = profileCatAge;
-        this.profileInfo = profileInfo;
-    }
 }
