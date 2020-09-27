@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequestMapping("user")
@@ -33,11 +35,12 @@ public class LoginController {
 
     /**
      * 회원가입
+     * @Valid 유효성 검증
      *
      * @return ResponseEntity
      */
     @PostMapping("/signUp")
-    public ResponseEntity signUp(@RequestBody SignUpModel signUpModel) {
+    public ResponseEntity signUp(@Valid @RequestBody SignUpModel signUpModel) {
         try {
             return new ResponseEntity(authService.signUp(signUpModel), HttpStatus.OK);
         } catch (Exception e) {
@@ -49,10 +52,11 @@ public class LoginController {
     /**
      * 로그인
      *
+     * @Valid 유효성 검증
      * @return ResponseEntity
      */
     @PostMapping("/signIn")
-    public ResponseEntity signIn(@RequestBody SignInModel signInModel) {
+    public ResponseEntity signIn(@Valid @RequestBody SignInModel signInModel) {
         try {
             return new ResponseEntity(authService.signIn(signInModel), HttpStatus.OK);
         } catch (Exception e) {
@@ -64,14 +68,12 @@ public class LoginController {
     /**
      * 아이디 중복체크
      *
+     * @Valid 유효성 검증
      * @return ResponseEntity
      */
     @PostMapping("/checkId")
-    public ResponseEntity checkId(@RequestBody LoginIdCheck loginIdCheck) {
+    public ResponseEntity checkId(@Valid @RequestBody LoginIdCheck loginIdCheck) {
         try {
-            if (loginIdCheck.getId() == null) {
-                return new ResponseEntity(DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NULL_VALUE), HttpStatus.BAD_REQUEST);
-            }
             return new ResponseEntity(authService.checkLoginId(loginIdCheck.getId()), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());

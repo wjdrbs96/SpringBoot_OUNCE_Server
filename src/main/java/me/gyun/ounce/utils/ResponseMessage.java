@@ -5,6 +5,7 @@ public class ResponseMessage {
     public static final String INTERNAL_SERVER_ERROR = "서버 내부 에러";
     public static final String DB_ERROR = "데이터베이스 에러";
     public static final String NULL_VALUE = "필요한 값이 없습니다";
+    public static final String UNAUTHORIZED = "권한이 없습니다";
 
     // 유저
     public static final String LOGIN_SUCCESS = "로그인 성공";

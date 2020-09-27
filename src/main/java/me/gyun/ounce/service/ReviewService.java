@@ -5,7 +5,7 @@ import me.gyun.ounce.dto.FoodReviewAdd;
 import me.gyun.ounce.dto.FoodReviewAll;
 import me.gyun.ounce.mapper.ReviewMapper;
 import me.gyun.ounce.model.DefaultRes;
-import me.gyun.ounce.model.ReviewAdd;
+import me.gyun.ounce.model.ReviewModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
 import me.gyun.ounce.dto.ReviewAddIdx;
@@ -53,7 +53,7 @@ public class ReviewService {
      * @param foodIdx
      */
     @Transactional
-    public DefaultRes reviewRegister(ReviewAdd reviewAdd, String token) {
+    public DefaultRes reviewRegister(ReviewModel reviewAdd, String token) {
         try {
             JwtService.TOKEN decode = jwtService.decode(token);
             FoodReviewAdd foodReviewAdd = new FoodReviewAdd(reviewAdd.getReviewRating(), reviewAdd.getReviewPrefer(), reviewAdd.getFoodEvaluation(), reviewAdd.getStoolState(), reviewAdd.getStoolSmell(), reviewAdd.getTrouble(), reviewAdd.getReviewMemo(), reviewAdd.getCreatedAt(), reviewAdd.getFoodIdx(), reviewAdd.getProfileIdx(), decode.getUserIdx());

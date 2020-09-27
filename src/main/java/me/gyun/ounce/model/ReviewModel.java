@@ -3,7 +3,7 @@ package me.gyun.ounce.model;
 import lombok.Data;
 
 @Data
-public class ReviewAdd {
+public class ReviewModel {
     private int reviewRating;
     private int reviewPrefer;
     private String foodEvaluation;

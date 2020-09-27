@@ -2,7 +2,7 @@ package me.gyun.ounce.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.model.DefaultRes;
-import me.gyun.ounce.model.ReviewAdd;
+import me.gyun.ounce.model.ReviewModel;
 import me.gyun.ounce.service.ReviewService;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
@@ -46,7 +46,7 @@ public class ReviewController {
      * @param ReviewAdd
      */
     @PostMapping("review/add")
-    public ResponseEntity reviewAdd(@RequestHeader("token") String token, @RequestBody ReviewAdd reviewAdd) {
+    public ResponseEntity reviewAdd(@RequestHeader("token") String token, @RequestBody ReviewModel reviewAdd) {
         try {
             return new ResponseEntity(reviewService.reviewRegister(reviewAdd, token), HttpStatus.OK);
         } catch (Exception e) {

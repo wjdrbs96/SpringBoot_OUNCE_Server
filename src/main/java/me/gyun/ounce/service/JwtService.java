@@ -81,6 +81,16 @@ public class JwtService {
         return new TOKEN();
     }
 
+    /**
+     * 권한 확인
+     *
+     * @param token, Authorization
+     * @param userIdx 사용자 고유 번호
+     * @return boolean
+     */
+    public boolean checkAuth(final String token, final int userIdx) {
+        return decode(token).getUserIdx() == userIdx;
+    }
 
     public static class TOKEN {
         //토큰에 담길 정보 필드
