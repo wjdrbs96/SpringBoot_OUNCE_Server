@@ -39,7 +39,7 @@ public class LoginController {
      *
      * @return ResponseEntity
      */
-    @PostMapping("/signUp")
+    @PostMapping("/signup")
     public ResponseEntity signUp(@Valid @RequestBody SignUpModel signUpModel) {
         try {
             return new ResponseEntity(authService.signUp(signUpModel), HttpStatus.OK);
@@ -55,7 +55,7 @@ public class LoginController {
      * @Valid 유효성 검증
      * @return ResponseEntity
      */
-    @PostMapping("/signIn")
+    @PostMapping("/signin")
     public ResponseEntity signIn(@Valid @RequestBody SignInModel signInModel) {
         try {
             return new ResponseEntity(authService.signIn(signInModel), HttpStatus.OK);
@@ -71,7 +71,7 @@ public class LoginController {
      * @Valid 유효성 검증
      * @return ResponseEntity
      */
-    @PostMapping("/checkId")
+    @PostMapping("/checkid")
     public ResponseEntity checkId(@Valid @RequestBody LoginIdCheck loginIdCheck) {
         try {
             return new ResponseEntity(authService.checkLoginId(loginIdCheck.getId()), HttpStatus.OK);
