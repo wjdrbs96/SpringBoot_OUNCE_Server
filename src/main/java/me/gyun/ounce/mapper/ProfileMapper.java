@@ -1,8 +1,8 @@
 package me.gyun.ounce.mapper;
 
-import me.gyun.ounce.dto.Profile;
-import me.gyun.ounce.dto.ProfileConversion;
-import me.gyun.ounce.dto.ProfileRegister;
+import me.gyun.ounce.dto.profiledto.Profile;
+import me.gyun.ounce.dto.profiledto.ProfileConversion;
+import me.gyun.ounce.dto.profiledto.ProfileRegister;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

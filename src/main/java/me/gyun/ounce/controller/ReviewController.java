@@ -51,7 +51,7 @@ public class ReviewController {
      * @param ReviewAdd
      */
     @Auth
-    @PostMapping("review/add/:userIdx")
+    @PostMapping("review/add/{userIdx}")
     public ResponseEntity reviewAdd(@RequestHeader("token") String token, @RequestBody ReviewModel reviewAdd, @PathVariable int userIdx) {
         try {
             if (jwtService.checkAuth(token, userIdx)) {

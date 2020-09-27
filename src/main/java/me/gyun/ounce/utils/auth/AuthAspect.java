@@ -2,7 +2,7 @@ package me.gyun.ounce.utils.auth;
 
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.User;
+import me.gyun.ounce.dto.logindto.User;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.service.JwtService;

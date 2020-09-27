@@ -1,4 +1,4 @@
-package me.gyun.ounce.dto;
+package me.gyun.ounce.dto.profiledto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

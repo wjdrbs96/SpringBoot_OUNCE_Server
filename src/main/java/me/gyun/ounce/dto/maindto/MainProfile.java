@@ -1,4 +1,4 @@
-package me.gyun.ounce.dto;
+package me.gyun.ounce.dto.maindto;
 
 import lombok.Data;
 

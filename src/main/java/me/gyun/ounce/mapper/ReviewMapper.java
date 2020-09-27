@@ -1,7 +1,7 @@
 package me.gyun.ounce.mapper;
 
-import me.gyun.ounce.dto.FoodReviewAdd;
-import me.gyun.ounce.dto.FoodReviewAll;
+import me.gyun.ounce.dto.fooddto.FoodReviewAdd;
+import me.gyun.ounce.dto.fooddto.FoodReviewAll;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

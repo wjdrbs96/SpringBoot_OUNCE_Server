@@ -1,8 +1,7 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.User;
-import me.gyun.ounce.dto.UserProfile;
+import me.gyun.ounce.dto.logindto.UserProfile;
 import me.gyun.ounce.mapper.SearchMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.utils.ResponseMessage;

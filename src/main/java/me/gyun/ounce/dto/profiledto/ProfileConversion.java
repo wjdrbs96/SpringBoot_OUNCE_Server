@@ -1,11 +1,9 @@
-package me.gyun.ounce.dto;
+package me.gyun.ounce.dto.profiledto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-public class UserProfile {
-    private String id;
+public class ProfileConversion {
     private int profileIdx;
     private String profileURL;
     private String profileName;

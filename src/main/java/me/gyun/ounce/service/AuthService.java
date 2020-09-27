@@ -1,9 +1,9 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.LoginResult;
-import me.gyun.ounce.dto.ProfileCount;
-import me.gyun.ounce.dto.User;
+import me.gyun.ounce.dto.logindto.LoginResult;
+import me.gyun.ounce.dto.profiledto.ProfileCount;
+import me.gyun.ounce.dto.logindto.User;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.SignInModel;

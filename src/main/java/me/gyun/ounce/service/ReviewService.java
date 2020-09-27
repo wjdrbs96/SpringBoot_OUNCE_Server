@@ -1,14 +1,14 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.FoodReviewAdd;
-import me.gyun.ounce.dto.FoodReviewAll;
+import me.gyun.ounce.dto.fooddto.FoodReviewAdd;
+import me.gyun.ounce.dto.fooddto.FoodReviewAll;
 import me.gyun.ounce.mapper.ReviewMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.ReviewModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
-import me.gyun.ounce.dto.ReviewAddIdx;
+import me.gyun.ounce.dto.reviewdto.ReviewAddIdx;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;

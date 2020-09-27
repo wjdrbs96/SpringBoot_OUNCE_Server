@@ -1,7 +1,6 @@
-package me.gyun.ounce.dto;
+package me.gyun.ounce.dto.maindto;
 
 import lombok.Data;
-import me.gyun.ounce.dto.MainProfile;
 
 @Data
 public class MainHomeUp {

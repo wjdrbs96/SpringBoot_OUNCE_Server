@@ -1,15 +1,15 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.Profile;
-import me.gyun.ounce.dto.ProfileRegister;
+import me.gyun.ounce.dto.profiledto.Profile;
+import me.gyun.ounce.dto.profiledto.ProfileRegister;
 import me.gyun.ounce.mapper.ProfileMapper;
 import me.gyun.ounce.model.DefaultRes;
-import me.gyun.ounce.dto.ProfileConversion;
+import me.gyun.ounce.dto.profiledto.ProfileConversion;
 import me.gyun.ounce.model.ProfileModel;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
-import me.gyun.ounce.dto.ProfileIdx;
+import me.gyun.ounce.dto.profiledto.ProfileIdx;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="me.gyun.ounce.mapper.ProfileMapper">
-    <insert id="profileRegister" parameterType="me.gyun.ounce.dto.ProfileRegister" useGeneratedKeys="true" keyProperty="profileRegister.profile.profileIdx">
+    <insert id="profileRegister" parameterType="me.gyun.ounce.dto.profiledto.ProfileRegister" useGeneratedKeys="true" keyProperty="profileRegister.profile.profileIdx">
         INSERT INTO profile (profileName, profileURL, profileCatWeight, profileCatNeutral, profileCatAge, profileInfo, userIdx)
         VALUES (#{profileRegister.profile.profileName}, #{profileRegister.profile.profileURL}, #{profileRegister.profile.profileCatWeight}, #{profileRegister.profile.profileCatNeutral}, #{profileRegister.profile.profileCatAge}, #{profileRegister.profile.profileInfo}, #{profileRegister.userIdx})
     </insert>

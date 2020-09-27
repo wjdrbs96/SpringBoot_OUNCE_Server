@@ -1,7 +1,7 @@
 package me.gyun.ounce.mapper;
 
-import me.gyun.ounce.dto.ProfileCount;
-import me.gyun.ounce.dto.User;
+import me.gyun.ounce.dto.profiledto.ProfileCount;
+import me.gyun.ounce.dto.logindto.User;
 import org.apache.ibatis.annotations.*;
 
 @Mapper

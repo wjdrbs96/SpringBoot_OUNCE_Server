@@ -13,7 +13,7 @@
         WHERE r.foodIdx = #{foodIdx}
     </select>
 
-    <insert id="foodReviewAdd" useGeneratedKeys="true" parameterType="me.gyun.ounce.dto.FoodReviewAdd" keyProperty="reviewIdx">
+    <insert id="foodReviewAdd" useGeneratedKeys="true" parameterType="me.gyun.ounce.dto.fooddto.FoodReviewAdd" keyProperty="reviewIdx">
         INSERT INTO review (reviewRating, reviewPrefer, foodEvaluation, stoolState, stoolSmell, trouble, reviewMemo, createdAt, foodIdx, profileIdx, userIdx)
         VALUES (#{reviewRating}, #{reviewPrefer}, #{foodEvaluation}, #{stoolState}, #{stoolSmell}, #{trouble}, #{reviewMemo}, #{createdAt}, #{foodIdx}, #{profileIdx}, #{userIdx})
     </insert>

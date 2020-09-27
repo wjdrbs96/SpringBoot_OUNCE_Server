@@ -1,6 +1,6 @@
 package me.gyun.ounce.mapper;
 
-import me.gyun.ounce.dto.MainProfile;
+import me.gyun.ounce.dto.maindto.MainProfile;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
