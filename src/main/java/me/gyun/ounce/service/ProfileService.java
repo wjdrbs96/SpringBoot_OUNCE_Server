@@ -115,13 +115,12 @@ public class ProfileService {
     /**
      * 나의 프로필 전환
      *
-     * @oaram token
+     * @param userIdx
      * @param profileIdx
      */
-    public DefaultRes conversion(int profileIdx, String token) {
+    public DefaultRes conversion(int profileIdx, int userIdx) {
         try {
-            JwtService.TOKEN decode = jwtService.decode(token);
-            List<ProfileConversion> profileList = profileMapper.profileConversion(profileIdx, decode.getUserIdx());
+            List<ProfileConversion> profileList = profileMapper.profileConversion(profileIdx, userIdx);
             return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_CONVERSION_SUCCESS, profileList);
         } catch (Exception e) {
             log.error(e.getMessage());

@@ -113,10 +113,13 @@ public class ProfileController {
      * @param profileIdx
      */
     @Auth
-    @GetMapping("/conversion/{profileIdx}")
-    public ResponseEntity profileConversion(@RequestHeader("token") String token, @PathVariable int profileIdx) {
+    @GetMapping("/conversion/{profileIdx}/{userIdx}")
+    public ResponseEntity profileConversion(@RequestHeader("token") String token, @PathVariable int profileIdx, @PathVariable int userIdx) {
         try {
-            return new ResponseEntity(profileService.conversion(profileIdx, token), HttpStatus.OK);
+            if (jwtService.checkAuth(token, userIdx)) {
+                return new ResponseEntity(profileService.conversion(profileIdx, userIdx), HttpStatus.OK);
+            }
+            return new ResponseEntity(UNAUTHORIZED_RES, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
