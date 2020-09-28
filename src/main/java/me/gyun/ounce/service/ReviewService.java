@@ -1,8 +1,8 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.fooddto.FoodReviewAdd;
-import me.gyun.ounce.dto.fooddto.FoodReviewAll;
+import me.gyun.ounce.dto.fooddto.FoodReviewAddDto;
+import me.gyun.ounce.dto.fooddto.FoodReviewAllDto;
 import me.gyun.ounce.mapper.ReviewMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.ReviewModel;
@@ -37,7 +37,7 @@ public class ReviewService {
      */
     public DefaultRes foodReviewAll(int foodIdx) {
         try {
-            List<FoodReviewAll> foodReviewAll = reviewMapper.foodReviewAll(foodIdx);
+            List<FoodReviewAllDto> foodReviewAll = reviewMapper.foodReviewAll(foodIdx);
             return DefaultRes.res(StatusCode.OK, ResponseMessage.FOOD_REVIEW_RESULT, foodReviewAll);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -46,24 +46,25 @@ public class ReviewService {
     }
 
     /**
-     * 캣 푸드 리뷰 전체 보기
+     * 캣 푸드 리뷰 등록
      *
      * @param foodIdx
+     * @param ReviewModel
      */
     @Transactional
-    public DefaultRes reviewRegister(ReviewModel reviewAdd, int userIdx) {
+    public DefaultRes reviewRegister(ReviewModel reviewModel, int userIdx) {
         try {
-            FoodReviewAdd foodReviewAdd = FoodReviewAdd.builder()
-                    .reviewRating(reviewAdd.getReviewRating())
-                    .reviewPrefer(reviewAdd.getReviewPrefer())
-                    .foodEvaluation(reviewAdd.getFoodEvaluation())
-                    .stoolState(reviewAdd.getStoolState())
-                    .stoolSmell(reviewAdd.getStoolSmell())
-                    .trouble(reviewAdd.getTrouble())
-                    .reviewMemo(reviewAdd.getReviewMemo())
-                    .createdAt(reviewAdd.getCreatedAt())
-                    .foodIdx(reviewAdd.getFoodIdx())
-                    .profileIdx(reviewAdd.getProfileIdx())
+            FoodReviewAddDto foodReviewAdd = FoodReviewAddDto.builder()
+                    .reviewRating(reviewModel.getReviewRating())
+                    .reviewPrefer(reviewModel.getReviewPrefer())
+                    .foodEvaluation(reviewModel.getFoodEvaluation())
+                    .stoolState(reviewModel.getStoolState())
+                    .stoolSmell(reviewModel.getStoolSmell())
+                    .trouble(reviewModel.getTrouble())
+                    .reviewMemo(reviewModel.getReviewMemo())
+                    .createdAt(reviewModel.getCreatedAt())
+                    .foodIdx(reviewModel.getFoodIdx())
+                    .profileIdx(reviewModel.getProfileIdx())
                     .userIdx(userIdx)
                     .build();
 
@@ -82,9 +83,8 @@ public class ReviewService {
     /**
      * 캣 푸드 리뷰 삭제
      *
-     * @param profileIdx
      * @param reviewIdx
-     * @param token
+     *
      */
     @Transactional
     public DefaultRes deleteReview(int reviewIdx) {

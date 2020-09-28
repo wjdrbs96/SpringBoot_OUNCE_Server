@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProfileIdx {
+public class ProfileIdxDto {
     private final int profileIdx;
 }

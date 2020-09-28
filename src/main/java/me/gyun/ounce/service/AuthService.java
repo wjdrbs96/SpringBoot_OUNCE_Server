@@ -1,9 +1,9 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.logindto.LoginResult;
-import me.gyun.ounce.dto.profiledto.ProfileCount;
-import me.gyun.ounce.dto.logindto.User;
+import me.gyun.ounce.dto.logindto.LoginResultDto;
+import me.gyun.ounce.dto.profiledto.ProfileCountDto;
+import me.gyun.ounce.dto.logindto.UserDto;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.SignInModel;
@@ -42,12 +42,12 @@ public class AuthService {
     @Transactional
     public DefaultRes<JwtService.TokenRes> signUp(final SignUpModel signUpModel) {
         try {
-            final User user = userMapper.findById(signUpModel.getId());
+            final UserDto user = userMapper.findById(signUpModel.getId());
 
             if (user == null) {
                 // 비밀번호 암호화
                 String encodePassword = passwordEncoder.encode(signUpModel.getPassword());
-                User user1 = new User(signUpModel.getId(), encodePassword, signUpModel.getEmail());
+                UserDto user1 = new UserDto(signUpModel.getId(), encodePassword, signUpModel.getEmail());
 
                 userMapper.userInsert(user1);
 
@@ -74,7 +74,7 @@ public class AuthService {
      */
     public DefaultRes signIn(final SignInModel signInModel) {
         try {
-            final User user = userMapper.findById(signInModel.getId());
+            final UserDto user = userMapper.findById(signInModel.getId());
 
             // 회원 정보가 존재하지 않거나, 아이디가 틀렸음
             if (user == null) {
@@ -83,11 +83,11 @@ public class AuthService {
 
             // 로그인 성공
             if (passwordEncoder.matches(signInModel.getPassword(), user.getPassword())) {
-                ProfileCount profileCount = userMapper.userProfileCount(user.getUserIdx());
+                ProfileCountDto profileCount = userMapper.userProfileCount(user.getUserIdx());
 
                 // 토큰 생성
                 final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(user.getUserIdx()));
-                LoginResult loginResult = new LoginResult(tokenDto.getToken(), profileCount);
+                LoginResultDto loginResult = new LoginResultDto(tokenDto.getToken(), profileCount);
                 return DefaultRes.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, loginResult);
             }
 

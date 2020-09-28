@@ -1,8 +1,8 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.maindto.MainHomeUp;
-import me.gyun.ounce.dto.maindto.MainProfile;
+import me.gyun.ounce.dto.maindto.MainHomeUpDto;
+import me.gyun.ounce.dto.maindto.MainProfileDto;
 import me.gyun.ounce.mapper.MainMapper;
 import me.gyun.ounce.mapper.ReviewMapper;
 import me.gyun.ounce.model.DefaultRes;
@@ -32,9 +32,9 @@ public class MainService {
 
     public DefaultRes mainMyProfile(int profileIdx) {
         try {
-            MainProfile mainProfile = mainMapper.MainProfileInquiry(profileIdx);
+            MainProfileDto mainProfile = mainMapper.MainProfileInquiry(profileIdx);
             int myReviewCount = reviewMapper.myReviewCount(profileIdx);
-            MainHomeUp mainHomeUp = new MainHomeUp(mainProfile, myReviewCount);
+            MainHomeUpDto mainHomeUp = new MainHomeUpDto(mainProfile, myReviewCount);
             return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_MAIN_SUCCESS, mainHomeUp);
         } catch (Exception e) {
             log.error(e.getMessage());

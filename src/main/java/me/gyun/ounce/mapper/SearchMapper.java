@@ -1,6 +1,6 @@
 package me.gyun.ounce.mapper;
 
-import me.gyun.ounce.dto.logindto.UserProfile;
+import me.gyun.ounce.dto.logindto.UserProfileDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,5 +9,5 @@ import java.util.List;
 public interface SearchMapper {
 
     // 유저검색
-    List<UserProfile> userSearch(String Id);
+    List<UserProfileDto> userSearch(String Id);
 }

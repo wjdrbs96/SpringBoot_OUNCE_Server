@@ -3,7 +3,7 @@ package me.gyun.ounce.dto.fooddto;
 import lombok.Data;
 
 @Data
-public class FoodReviewAll {
+public class FoodReviewAllDto {
     private int profileIdx;
     private String profileURL;
     private String profileName;

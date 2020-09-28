@@ -7,13 +7,13 @@
         SELECT count(reviewIdx) FROM review WHERE profileIdx = #{profileIdx}
     </select>
 
-    <select id="foodReviewAll" resultType="FoodReviewAll">
+    <select id="foodReviewAll" resultType="FoodReviewAllDto">
         SELECT p.profileIdx, p.profileURL, p.profileName, p.profileCatAge, r.reviewIdx, r.foodEvaluation, r.reviewRating, r.reviewPrefer, r.foodIdx
         FROM review r JOIN profile p ON r.profileIdx = p.profileIdx
         WHERE r.foodIdx = #{foodIdx}
     </select>
 
-    <insert id="foodReviewAdd" useGeneratedKeys="true" parameterType="me.gyun.ounce.dto.fooddto.FoodReviewAdd" keyProperty="reviewIdx">
+    <insert id="foodReviewAdd" useGeneratedKeys="true" parameterType="me.gyun.ounce.dto.fooddto.FoodReviewAddDto" keyProperty="reviewIdx">
         INSERT INTO review (reviewRating, reviewPrefer, foodEvaluation, stoolState, stoolSmell, trouble, reviewMemo, createdAt, foodIdx, profileIdx, userIdx)
         VALUES (#{reviewRating}, #{reviewPrefer}, #{foodEvaluation}, #{stoolState}, #{stoolSmell}, #{trouble}, #{reviewMemo}, #{createdAt}, #{foodIdx}, #{profileIdx}, #{userIdx})
     </insert>

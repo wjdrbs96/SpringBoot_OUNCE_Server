@@ -4,7 +4,7 @@
 
 <mapper namespace="me.gyun.ounce.mapper.UserMapper">
     <!-- ID로 유저 찾기 -->
-    <select id="findById" resultType="User">
+    <select id="findById" resultType="UserDto">
         SELECT * FROM user WHERE id = #{id}
     </select>
 
@@ -14,7 +14,7 @@
     </insert>
 
     <!--  userIdx로 유저찾기   -->
-    <select id="findByUserIdx" resultType="User">
+    <select id="findByUserIdx" resultType="UserDto">
         SELECT * FROM user WHERE userIdx = #{userIdx}
     </select>
 
@@ -22,7 +22,7 @@
         SELECT count(userIdx) FROM user WHERE id = #{id};
     </select>
 
-    <select id="userProfileCount" resultType="ProfileCount">
+    <select id="userProfileCount" resultType="ProfileCountDto">
         SELECT profileIdx, count(profileIdx) as userProfileCount FROM profile WHERE userIdx = #{userIdx}
     </select>
 </mapper>

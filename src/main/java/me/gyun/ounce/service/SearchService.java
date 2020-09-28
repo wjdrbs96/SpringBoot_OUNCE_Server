@@ -1,7 +1,7 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.logindto.UserProfile;
+import me.gyun.ounce.dto.logindto.UserProfileDto;
 import me.gyun.ounce.mapper.SearchMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.utils.ResponseMessage;
@@ -33,7 +33,7 @@ public class SearchService {
      */
     public DefaultRes userSearch(String id) {
         try {
-            List<UserProfile> userList = searchMapper.userSearch(id);
+            List<UserProfileDto> userList = searchMapper.userSearch(id);
             if (userList.isEmpty()) {
                 return DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.NO_SEARCH_RESULT);
             }

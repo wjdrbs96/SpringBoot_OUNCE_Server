@@ -3,12 +3,12 @@ package me.gyun.ounce.dto.maindto;
 import lombok.Data;
 
 @Data
-public class MainHomeUp {
+public class MainHomeUpDto {
 
-    private MainProfile myProfileInfo;
+    private MainProfileDto myProfileInfo;
     private int myReviewCount;
 
-    public MainHomeUp(MainProfile myProfileInfo, int myReviewCount) {
+    public MainHomeUpDto(MainProfileDto myProfileInfo, int myReviewCount) {
         this.myProfileInfo = myProfileInfo;
         this.myReviewCount = myReviewCount;
     }

@@ -2,7 +2,7 @@ package me.gyun.ounce.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.model.DefaultRes;
-import me.gyun.ounce.model.LoginIdCheck;
+import me.gyun.ounce.model.LoginIdCheckModel;
 import me.gyun.ounce.model.SignInModel;
 import me.gyun.ounce.model.SignUpModel;
 import me.gyun.ounce.service.AuthService;
@@ -72,7 +72,7 @@ public class LoginController {
      * @return ResponseEntity
      */
     @PostMapping("/checkid")
-    public ResponseEntity checkId(@Valid @RequestBody LoginIdCheck loginIdCheck) {
+    public ResponseEntity checkId(@Valid @RequestBody LoginIdCheckModel loginIdCheck) {
         try {
             return new ResponseEntity(authService.checkLoginId(loginIdCheck.getId()), HttpStatus.OK);
         } catch (Exception e) {

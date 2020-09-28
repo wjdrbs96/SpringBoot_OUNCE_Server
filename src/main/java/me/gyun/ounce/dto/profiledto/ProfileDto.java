@@ -1,15 +1,15 @@
-package me.gyun.ounce.dto.maindto;
+package me.gyun.ounce.dto.profiledto;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
-public class MainProfile {
+@Builder
+public class ProfileDto {
+    private int profileIdx;
     private String profileName;
     private String profileURL;
     private double profileCatWeight;
     private boolean profileCatNeutral;
     private int profileCatAge;
     private String profileInfo;
-    private int myFollowingCount;
-    private int myFollowerCount;
 }

@@ -1,10 +1,10 @@
 package me.gyun.ounce.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.profiledto.Profile;
-import me.gyun.ounce.dto.profiledto.ProfileConversion;
-import me.gyun.ounce.dto.profiledto.ProfileIdx;
-import me.gyun.ounce.dto.profiledto.ProfileRegister;
+import me.gyun.ounce.dto.profiledto.ProfileDto;
+import me.gyun.ounce.dto.profiledto.ProfileConversionDto;
+import me.gyun.ounce.dto.profiledto.ProfileIdxDto;
+import me.gyun.ounce.dto.profiledto.ProfileRegisterDto;
 import me.gyun.ounce.mapper.ProfileMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.model.ProfileModel;
@@ -47,7 +47,7 @@ public class ProfileService {
             if (profileModel != null) {
                 profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
             }
-            Profile profile = Profile.builder()
+            ProfileDto profile = ProfileDto.builder()
                     .profileName(profileModel.getProfileName())
                     .profileURL(profileModel.getProfileURL())
                     .profileCatWeight(profileModel.getProfileCatWeight())
@@ -56,9 +56,9 @@ public class ProfileService {
                     .profileInfo(profileModel.getProfileInfo())
                     .build();
 
-            ProfileRegister profileRegister = new ProfileRegister(profile, userIdx);
+            ProfileRegisterDto profileRegister = new ProfileRegisterDto(profile, userIdx);
             profileMapper.profileRegister(profileRegister);
-            ProfileIdx profileIdx = new ProfileIdx(profileRegister.getProfile().getProfileIdx());
+            ProfileIdxDto profileIdx = new ProfileIdxDto(profileRegister.getProfile().getProfileIdx());
             return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_REGISTER_SUCCESS, profileIdx);
         } catch (Exception e) {
             //Rollback
@@ -80,7 +80,7 @@ public class ProfileService {
             if (profileModel.getProfileImg() != null) {
                 profileModel.setProfileURL(s3FileUploadService.upload(profileModel.getProfileImg()));
             }
-            Profile profile = Profile.builder()
+            ProfileDto profile = ProfileDto.builder()
                     .profileName(profileModel.getProfileName())
                     .profileURL(profileModel.getProfileURL())
                     .profileCatWeight(profileModel.getProfileCatWeight())
@@ -129,8 +129,19 @@ public class ProfileService {
      */
     public DefaultRes conversion(int profileIdx, int userIdx) {
         try {
-            List<ProfileConversion> profileList = profileMapper.profileConversion(profileIdx, userIdx);
+            List<ProfileConversionDto> profileList = profileMapper.profileConversion(profileIdx, userIdx);
             return DefaultRes.res(StatusCode.OK, ResponseMessage.PROFILE_CONVERSION_SUCCESS, profileList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
+
+    @Transactional
+    public DefaultRes followDelete(int followerIdx, int followingIdx) {
+        try {
+            profileMapper.followDelete(followingIdx, followerIdx);
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.FOLLOW_DELETE_SUCCESS);
         } catch (Exception e) {
             log.error(e.getMessage());
             return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);

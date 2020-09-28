@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProfileRegister {
-    private Profile profile;
+public class ProfileRegisterDto {
+    private ProfileDto profile;
     private int userIdx;
 }

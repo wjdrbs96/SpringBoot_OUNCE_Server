@@ -2,7 +2,7 @@ package me.gyun.ounce.utils.auth;
 
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.logindto.User;
+import me.gyun.ounce.dto.logindto.UserDto;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.service.JwtService;
@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,7 +54,7 @@ public class  AuthAspect {
     @Around("@annotation(me.gyun.ounce.utils.auth.Auth)")
     public Object around(final ProceedingJoinPoint pjp) throws Throwable {
         final String jwt = httpServletRequest.getHeader(AUTHORIZATION);
-        // Object attribute = httpServletRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        System.out.println(httpServletRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
 
         // 토큰 존재 여부 확인
         if (jwt == null) {
@@ -67,7 +68,7 @@ public class  AuthAspect {
         if (token == null) {
             return RES_RESPONSE_ENTITY;
         } else {
-            final User user = userMapper.findByUserIdx(token.getUserIdx());
+            final UserDto user = userMapper.findByUserIdx(token.getUserIdx());
             // 유효 사용자 검사
             if (user == null) {
                 return RES_RESPONSE_ENTITY;

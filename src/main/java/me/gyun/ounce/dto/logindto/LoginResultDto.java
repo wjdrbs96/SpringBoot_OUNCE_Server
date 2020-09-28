@@ -2,11 +2,11 @@ package me.gyun.ounce.dto.logindto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import me.gyun.ounce.dto.profiledto.ProfileCount;
+import me.gyun.ounce.dto.profiledto.ProfileCountDto;
 
 @Data
 @AllArgsConstructor
-public class LoginResult {
+public class LoginResultDto {
     private String token;
-    private ProfileCount profileCount;
+    private ProfileCountDto profileCount;
 }

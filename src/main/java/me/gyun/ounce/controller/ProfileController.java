@@ -38,7 +38,7 @@ public class ProfileController {
 
     /**
      * 프로필 등록
-     *
+
      * @param ProfileModel
      * @param Token
      * @param ProfileImg
@@ -122,6 +122,28 @@ public class ProfileController {
         try {
             if (jwtService.checkAuth(token, userIdx)) {
                 return new ResponseEntity(profileService.conversion(profileIdx, userIdx), HttpStatus.OK);
+            }
+            return new ResponseEntity(UNAUTHORIZED_RES, HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 팔로우 취소
+     *
+     * @param followerIdx userIdx 프로필
+     * @param followingIdx userIdx 프로필이 팔로우 하는 프로필
+     */
+    @Auth
+    @DeleteMapping("/follow-delete/{userIdx}")
+    public ResponseEntity followDelete(@RequestHeader("token") String token,
+                                       @RequestParam("followerIdx") int followerIdx, @RequestParam("followingIdx") int followingIdx,
+                                       @PathVariable int userIdx) {
+        try {
+            if (jwtService.checkAuth(token, userIdx)) {
+                return new ResponseEntity(profileService.followDelete(followingIdx, followerIdx), HttpStatus.OK);
             }
             return new ResponseEntity(UNAUTHORIZED_RES, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {

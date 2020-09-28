@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileCount {
+public class ProfileCountDto {
     private int profileIdx;
     private int userProfileCount;
 }

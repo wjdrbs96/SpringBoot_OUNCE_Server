@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="me.gyun.ounce.mapper.MainMapper">
-    <select id="MainProfileInquiry" resultType="MainProfile">
+    <select id="MainProfileInquiry" resultType="MainProfileDto">
         SELECT profileName, profileURL, profileCatWeight, profileCatNeutral, profileCatAge, profileInfo, (SELECT count(follow.followingIdx) FROM follow WHERE follow.followingIdx = #{profileIdx}) as MyFollowingCount, (SELECT count(follow.followerIdx) FROM follow WHERE follow.followerIdx = #{profileIdx}) as MyFollowerCount
         FROM profile
         WHERE profileIdx = #{profileIdx};

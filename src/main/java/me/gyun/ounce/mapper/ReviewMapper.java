@@ -1,7 +1,7 @@
 package me.gyun.ounce.mapper;
 
-import me.gyun.ounce.dto.fooddto.FoodReviewAdd;
-import me.gyun.ounce.dto.fooddto.FoodReviewAll;
+import me.gyun.ounce.dto.fooddto.FoodReviewAddDto;
+import me.gyun.ounce.dto.fooddto.FoodReviewAllDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,10 +14,10 @@ public interface ReviewMapper {
     int myReviewCount(@Param("profileIdx") int profileIdx);
 
     // 리뷰 전체 보기
-    List<FoodReviewAll> foodReviewAll(@Param("foodIdx") int foodIdx);
+    List<FoodReviewAllDto> foodReviewAll(@Param("foodIdx") int foodIdx);
 
     // 리뷰 작성
-    int foodReviewAdd(FoodReviewAdd foodReviewAdd);
+    int foodReviewAdd(FoodReviewAddDto foodReviewAdd);
 
     // 유저가 가지고 있는 프로필 조회
     int[] findProfileIdx(int userIdx);
