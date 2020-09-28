@@ -1,4 +1,4 @@
-package me.gyun.ounce.controller;
+package me.gyun.ounce.controller.exception;
 
 import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.utils.ResponseMessage;

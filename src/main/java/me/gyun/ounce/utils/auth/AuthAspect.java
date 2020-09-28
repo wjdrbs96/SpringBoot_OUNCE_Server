@@ -56,6 +56,7 @@ public class  AuthAspect {
         final String jwt = httpServletRequest.getHeader(AUTHORIZATION);
         System.out.println(httpServletRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
 
+
         // 토큰 존재 여부 확인
         if (jwt == null) {
             return RES_RESPONSE_ENTITY;
