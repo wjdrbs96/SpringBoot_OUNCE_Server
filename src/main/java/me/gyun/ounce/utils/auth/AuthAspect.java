@@ -2,9 +2,9 @@ package me.gyun.ounce.utils.auth;
 
 
 import lombok.extern.slf4j.Slf4j;
-import me.gyun.ounce.dto.logindto.UserDto;
+import me.gyun.ounce.dto.ResponseDto;
+import me.gyun.ounce.dto.user.UserDto;
 import me.gyun.ounce.mapper.UserMapper;
-import me.gyun.ounce.model.DefaultRes;
 import me.gyun.ounce.service.JwtService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -35,8 +35,8 @@ public class  AuthAspect {
     /**
      * 실패 시 기본 반환 Response
      */
-    private final static DefaultRes DEFAULT_RES = DefaultRes.builder().statusCode(401).responseMessage("인증 실패").build();
-    private final static ResponseEntity<DefaultRes> RES_RESPONSE_ENTITY = new ResponseEntity<>(DEFAULT_RES, HttpStatus.UNAUTHORIZED);
+    private final static ResponseDto DEFAULT_RES = ResponseDto.builder().statusCode(401).responseMessage("인증 실패").build();
+    private final static ResponseEntity<ResponseDto> RES_RESPONSE_ENTITY = new ResponseEntity<>(DEFAULT_RES, HttpStatus.UNAUTHORIZED);
 
     private final UserMapper userMapper;
     private final HttpServletRequest httpServletRequest;

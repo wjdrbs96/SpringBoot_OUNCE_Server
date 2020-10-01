@@ -19,25 +19,4 @@ public class ResponseMessage {
     public static final String DELETE_USER = "회원 탈퇴 성공";
     public static final String AVAILABLE_LOGINID= "사용가능한 아이디입니다";
 
-    // 프로필
-    public static final String PROFILE_REGISTER_SUCCESS = "프로필 등록 성공입니다";
-    public static final String PROFILE_REGISTER_POSSIBLE = "프로필 등록 가능합니다";
-    public static final String PROFILE_REGISTER_IMPOSSIBLE = "프로필 등록 불가능합니다";
-    public static final String PROFILE_UPDATE_SUCCESS = "프로필 수정 성공입니다";
-    public static final String PROFILE_NOT_AUTHORITY = "프로필 수정 권한이 없습니다";
-    public static final String PROFILE_CONVERSION_SUCCESS = "프로필 전환 성공입니다";
-    public static final String FOLLOW_DELETE_SUCCESS = "팔로우 취소 성공입니다";
-
-    // 메인화면
-    public static final String PROFILE_MAIN_SUCCESS = "메인 프로필 조회 성공입니다";
-
-    // 검색
-    public static final String SUCCESS_SEARCH_USER = "유저검색 성공입니다";
-    public static final String NO_SEARCH_RESULT = "검색결과가 존재하지 않습니다";
-
-    // 리뷰
-    public static final String FOOD_REVIEW_RESULT = "캣푸드 리뷰전체 조회 성공입니다";
-    public static final String REVIEW_REGISTER_SUCCESS = "리뷰작성 성공입니다";
-    public static final String REVIEW_NOT_DELETE = "리뷰 삭제권한이 없습니다";
-    public static final String REVIEW_SUCCESS_DELETE = "리뷰를 삭제하였습니다";
 }
