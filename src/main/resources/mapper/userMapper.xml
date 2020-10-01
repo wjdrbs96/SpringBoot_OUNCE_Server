@@ -8,4 +8,14 @@
         FROM user
         WHERE userIdx = #{userIdx}
     </select>
+
+    <insert id="signUp" useGeneratedKeys="true" keyProperty="userIdx">
+        INSERT INTO user (id, password, email) VALUES (#{id}, #{password}, #{email})
+    </insert>
+
+    <select id="findByLoginId" resultType="UserDto">
+        SELECT *
+        FROM user
+        WHERE id = #{id}
+    </select>
 </mapper>
