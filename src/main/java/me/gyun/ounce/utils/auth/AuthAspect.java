@@ -12,7 +12,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 // 항상 @annotation 패키지 이름을 실제 사용한 annotation 경로로 맞춰야함
 public class  AuthAspect {
 
-    private final static String AUTHORIZATION = "token";
+    private final static String AUTHORIZATION = "accessToken";
     /**
      * 실패 시 기본 반환 Response
      */
@@ -54,8 +53,7 @@ public class  AuthAspect {
     @Around("@annotation(me.gyun.ounce.utils.auth.Auth)")
     public Object around(final ProceedingJoinPoint pjp) throws Throwable {
         final String jwt = httpServletRequest.getHeader(AUTHORIZATION);
-        System.out.println(httpServletRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
-
+        System.out.println(jwt);
 
         // 토큰 존재 여부 확인
         if (jwt == null) {

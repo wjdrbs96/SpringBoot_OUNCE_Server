@@ -18,4 +18,7 @@ public class ResponseMessage {
     public static final String UPDATE_USER = "회원 정보 수정 성공";
     public static final String DELETE_USER = "회원 탈퇴 성공";
 
+    // 프로필
+    public static final String PROFILE_REGISTER = "프로필 등록 성공";
+
 }
