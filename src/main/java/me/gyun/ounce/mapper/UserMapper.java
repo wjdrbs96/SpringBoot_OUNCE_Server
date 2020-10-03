@@ -11,4 +11,6 @@ public interface UserMapper {
     UserDto findByLoginId(String id);
 
     void signUp(UserDto userDto);
+
+    void userUpdate(String refreshToken, int userIdx);
 }

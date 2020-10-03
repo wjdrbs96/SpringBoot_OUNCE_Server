@@ -36,8 +36,9 @@ public class UserService {
             String encodePassword = passwordEncoder.encode(signUpDto.getPassword());
             UserDto userDto = new UserDto(signUpDto.getId(), encodePassword, signUpDto.getEmail());
             userMapper.signUp(userDto);
-            String accessToken = jwtService.create(userDto.getUserIdx());
-            return ResponseDto.res(StatusCode.OK, ResponseMessage.CREATED_USER, new TokenDto(accessToken, null));
+            TokenDto tokenDto = jwtService.create(userDto.getUserIdx());
+            userMapper.userUpdate(tokenDto.getRefreshToken(), userDto.getUserIdx());
+            return ResponseDto.res(StatusCode.OK, ResponseMessage.CREATED_USER, tokenDto);
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseDto.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.DB_ERROR);
@@ -58,8 +59,8 @@ public class UserService {
 
             UserDto userDto = new UserDto(signInDto.getId(), signInDto.getPassword());
             if (passwordEncoder.matches(signInDto.getPassword(), byLoginId.getPassword())) {
-                String accessToken = jwtService.create(byLoginId.getUserIdx());
-                return ResponseDto.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, new TokenDto(accessToken, null));
+                TokenDto tokenDto = jwtService.create(byLoginId.getUserIdx());
+                return ResponseDto.res(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS, tokenDto);
             }
 
             return ResponseDto.res(StatusCode.BAD_REQUEST, ResponseMessage.LOGIN_FAIL);

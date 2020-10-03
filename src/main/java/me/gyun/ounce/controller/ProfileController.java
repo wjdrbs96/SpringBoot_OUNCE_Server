@@ -23,11 +23,10 @@ public class ProfileController {
     private final ProfileService profileService;
 
     @Auth
-    @PostMapping("/register/{profileIdx}")
+    @PostMapping("/register")
     public ResponseEntity<ResponseDto<?>> profileRegister(@RequestHeader("accessToken") String accessToken,
                                                           @RequestPart(value = "profileImg") MultipartFile multipartFile,
-                                                          @Valid ProfileRegisterDto profileRegisterDto,
-                                                          @PathVariable int profileIdx) {
+                                                          @Valid ProfileRegisterDto profileRegisterDto) {
         if (multipartFile == null) {
             return new ResponseEntity<>(ResponseDto.res(StatusCode.BAD_REQUEST, "필요한 값이 없습니다"), HttpStatus.BAD_REQUEST);
         }

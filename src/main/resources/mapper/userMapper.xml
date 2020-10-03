@@ -18,4 +18,10 @@
         FROM user
         WHERE id = #{id}
     </select>
+
+    <update id="userUpdate">
+        UPDATE user
+        SET refreshToken = #{refreshToken}
+        WHERE userIdx = #{userIdx}
+    </update>
 </mapper>

@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
+import me.gyun.ounce.dto.user.TokenDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,12 @@ public class JwtService {
     @Value("${JWT.SECRET}")
     private String SECRET;
 
+    @Value("${JWT.REFRESH_ISSUER}")
+    private String REFRESH_ISSUER;
+
+    @Value("${JWT.REFRESH.SECRET}")
+    private String REFRESH_SECRET;
+
 
     /**
      * 토큰 생성
@@ -34,27 +41,38 @@ public class JwtService {
      * @return 토큰
      */
 
-    public String create(final int userIdx) {
+    public TokenDto create(final int userIdx) {
         try {
-            JWTCreator.Builder b = JWT.create();
+            JWTCreator.Builder accessToken = JWT.create();
+            JWTCreator.Builder refreshToken = JWT.create();
             // 토큰 발급자
-            b.withIssuer(ISSUER);
+            refreshToken.withIssuer(REFRESH_ISSUER);
+            refreshToken.withClaim("userIdx", userIdx);
+            refreshToken.withExpiresAt(refreshExpiresAt());
             // 토큰 payload 작성, key - value 형식, 객체도 가능
-            b.withClaim("userIdx", userIdx);
+            accessToken.withIssuer(ISSUER);
+            accessToken.withClaim("userIdx", userIdx);
             // 토큰 만료날짜 지정
-            b.withExpiresAt(expiresAt());
-            return b.sign(Algorithm.HMAC256(SECRET));
+            accessToken.withExpiresAt(accessExpiresAt());
+            TokenDto tokenDto = new TokenDto(accessToken.sign(Algorithm.HMAC256(SECRET)), refreshToken.sign(Algorithm.HMAC256(REFRESH_SECRET)));
+            return tokenDto;
         } catch (JWTCreationException jwtCreationException) {
             log.info(jwtCreationException.getLocalizedMessage());
         }
         return null;
     }
 
-    private Date expiresAt()  {
+    private Date accessExpiresAt()  {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        // 한달 24 * 31
         cal.add(Calendar.HOUR, 2);
+        return cal.getTime();
+    }
+
+    private Date refreshExpiresAt() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DAY_OF_WEEK, 2);
         return cal.getTime();
     }
 
@@ -73,6 +91,19 @@ public class JwtService {
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
             // 토큰 payload 반환, 정상적인 토큰이라면 토큰 사용자 고유 ID, 아니라면 -1
             return new TOKEN(decodedJWT.getClaim("userIdx").asLong().intValue());
+        } catch (JWTVerificationException jve) {
+            log.error(jve.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return new TOKEN();
+    }
+
+    public TOKEN refreshDecode(final String refreshToken) {
+        try {
+            final JWTVerifier jwtVerifier = require(Algorithm.HMAC256(REFRESH_SECRET)).withIssuer(REFRESH_ISSUER).build();
+            DecodedJWT refreshTokenVerify = jwtVerifier.verify(refreshToken);
+            return new TOKEN(refreshTokenVerify.getClaim("userIdx").asLong().intValue());
         } catch (JWTVerificationException jve) {
             log.error(jve.getMessage());
         } catch (Exception e) {
