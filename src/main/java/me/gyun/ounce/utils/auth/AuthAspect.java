@@ -51,7 +51,7 @@ public class  AuthAspect {
     }
 
     @Around("@annotation(me.gyun.ounce.utils.auth.Auth)")
-    public Object around(final ProceedingJoinPoint pjp) throws Throwable {
+    public Object aroundAccessToken(final ProceedingJoinPoint pjp) throws Throwable {
         final String jwt = httpServletRequest.getHeader(AUTHORIZATION);
         System.out.println(jwt);
 
@@ -62,6 +62,31 @@ public class  AuthAspect {
 
         // 토큰 해독
         final JwtService.TOKEN token = jwtService.decode(jwt);
+
+        // 토큰 검사
+        if (token == null) {
+            return RES_RESPONSE_ENTITY;
+        } else {
+            final UserDto user = userMapper.findByUserIdx(token.getUserIdx());
+            // 유효 사용자 검사
+            if (user == null) {
+                return RES_RESPONSE_ENTITY;
+            }
+            return pjp.proceed(pjp.getArgs());
+        }
+    }
+
+    @Around("@annotation(me.gyun.ounce.utils.auth.RefreshAuth)")
+    public Object aroundRefreshToken(final ProceedingJoinPoint pjp) throws Throwable {
+        final String jwt = httpServletRequest.getHeader("refreshToken");
+
+        // 토큰 존재 여부 확인
+        if (jwt == null) {
+            return RES_RESPONSE_ENTITY;
+        }
+
+        // 토큰 해독
+        final JwtService.TOKEN token = jwtService.refreshDecode(jwt);
 
         // 토큰 검사
         if (token == null) {
