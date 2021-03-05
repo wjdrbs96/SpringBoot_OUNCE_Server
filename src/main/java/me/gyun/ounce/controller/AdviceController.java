@@ -2,6 +2,7 @@ package me.gyun.ounce.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import me.gyun.ounce.dto.ResponseDto;
+import me.gyun.ounce.exception.AlreadyUser;
 import me.gyun.ounce.utils.StatusCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +45,12 @@ public class AdviceController {
         return new ResponseEntity(ResponseDto.res(StatusCode.BAD_REQUEST, b.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
+
+    @ExceptionHandler(value = AlreadyUser.class)
+    public ResponseEntity<Object> test(AlreadyUser ex) {
+        ex.printStackTrace();
+        return ResponseEntity.ok() // 502
+                .body(ResponseDto.res(200, "이미 유저가 존재합니다 " + ex.getMessage()));
+    }
 
 }

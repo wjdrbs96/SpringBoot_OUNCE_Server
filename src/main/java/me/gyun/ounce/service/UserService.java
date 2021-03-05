@@ -7,6 +7,7 @@ import me.gyun.ounce.dto.user.SignInDto;
 import me.gyun.ounce.dto.user.SignUpDto;
 import me.gyun.ounce.dto.user.TokenDto;
 import me.gyun.ounce.dto.user.UserDto;
+import me.gyun.ounce.exception.AlreadyUser;
 import me.gyun.ounce.mapper.UserMapper;
 import me.gyun.ounce.utils.ResponseMessage;
 import me.gyun.ounce.utils.StatusCode;
@@ -30,7 +31,7 @@ public class UserService {
         try {
             UserDto byLoginId = userMapper.findByLoginId(signUpDto.getId());
             if (byLoginId != null) {
-                return ResponseDto.res(StatusCode.BAD_REQUEST, ResponseMessage.ALREADY_USER);
+                throw new AlreadyUser("유저가 이미 존재합니다");
             }
 
             String encodePassword = passwordEncoder.encode(signUpDto.getPassword());
