@@ -10,4 +10,9 @@ public class TestController {
     public String test() {
         return "String";
     }
+
+    @GetMapping("/")
+    public String jek() {
+        return "jenkins";
+    }
 }
